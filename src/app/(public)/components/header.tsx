@@ -1,9 +1,19 @@
+'use client'
 import ImageComponent from '@/components/image-component'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Search } from 'lucide-react'
 
-export default function Header() {
+interface HeaderProps {
+	searchInputConfig: {
+		inputValue: string
+		inputChange: (value: string) => void
+	}
+}
+
+export default function Header({
+	searchInputConfig: { inputValue, inputChange },
+}: HeaderProps) {
 	return (
 		<>
 			<header className="flex items-center justify-between bg-zinc-800 px-4 py-2 text-white">
@@ -18,7 +28,12 @@ export default function Header() {
 					/>
 					<div className="flex items-center gap-2">
 						<Search className="size-10" />
-						<Input className="w-96" placeholder="Pesquisar..." />
+						<Input
+							className="w-96"
+							placeholder="Pesquisar..."
+							value={inputValue}
+							onChange={e => inputChange(e.target.value)}
+						/>
 					</div>
 				</div>
 

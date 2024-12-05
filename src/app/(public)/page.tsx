@@ -1,6 +1,5 @@
-import ImageComponent from '@/components/image-component'
 import { get } from '@/utils/tmdb'
-import Header from './components/header'
+import PageComponent from './components/page-component'
 
 export default async function Home() {
 	let url = '/tv/popular?language=en-US&page=1'
@@ -13,7 +12,10 @@ export default async function Home() {
 
 	return (
 		<>
-			<Header />
+			<PageComponent
+				popularTVShows={popularTVShows.results}
+				popularMovies={popularMovies.results}
+			/>
 		</>
 	)
 }

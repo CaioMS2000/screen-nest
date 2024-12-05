@@ -53,7 +53,8 @@ export default {
 			app:{
 				red: '#E50914',
 				"light-yellow": '#FFFF00',
-				"yellow": '#FFE400'
+				"yellow": '#FFE400',
+				black: '#191818'
 			}
   		},
   		borderRadius: {
@@ -63,5 +64,5 @@ export default {
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar")],
 } satisfies Config;
