@@ -13,7 +13,7 @@ const defaultOptions: FetchOptions = {
 	method: 'GET',
 	headers: {
 		accept: 'application/json',
-		Authorization: `Bearer ${env.TMDB_TOKEN}`,
+		Authorization: `Bearer ${env.NEXT_PUBLIC_TMDB_TOKEN}`,
 	},
 }
 

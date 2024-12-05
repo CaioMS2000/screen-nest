@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import Providers from './providers'
 
 export const metadata: Metadata = {
 	title: 'Screen Nest',
@@ -14,7 +15,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={'dark bg-app-black antialiased'}>{children}</body>
+			<body className={'dark bg-app-black antialiased'}>
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	)
 }
