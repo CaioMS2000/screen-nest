@@ -1,20 +1,34 @@
 'use client'
 import { cn } from '@/lib/utils'
 import ImageComponent from './image-component'
+import { useRouter } from 'next/navigation'
 
 interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	title: string
 	imgUrl: string
+	mediaId: number
+	type: 'movie' | 'serie'
 }
 
 export default function MediaBox({
 	title,
 	imgUrl,
 	className,
+	type,
+	mediaId,
 	...props
 }: MediaBoxProps) {
+	const router = useRouter()
+
+	const handleClick = () => {
+		router.push(`/${type}/${mediaId}`)
+	}
 	return (
-		<div className={cn('relative w-fit', className)} {...props}>
+		<div
+			className={cn('relative w-fit cursor-pointer', className)}
+			{...props}
+			onClick={handleClick}
+		>
 			<ImageComponent
 				width={0}
 				height={0}

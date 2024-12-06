@@ -1,7 +1,7 @@
+'use client'
 import { FetchMoviesResponse, FetchSeriesResponse } from '@/app/@types/http'
 import { fetchMovies, fetchSeries } from '@/app/actions'
 import MediaBox from '@/components/media-box'
-import { get } from '@/utils/tmdb'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
@@ -43,22 +43,38 @@ export default function SearchingComponent({ query }: SearchingComponentProps) {
 	return (
 		<>
 			<div className="div">
-				{moviesData &&
-					moviesData.movies.map(movie => {
-						return (
-							<MediaBox
-								key={movie.id}
-								title={movie.title}
-								imgUrl={movie.poster_path}
-							/>
-						)
-					})}
-				{seriesData &&
-					seriesData.series.map(serie => {
-						return (
-							<MediaBox key={serie.id} title={serie.name} imgUrl={serie.poster_path} />
-						)
-					})}
+				{
+					// biome-ignore lint/complexity/useOptionalChain:
+					moviesData &&
+						moviesData.movies &&
+						moviesData.movies.map(movie => {
+							return (
+								<MediaBox
+									key={movie.id}
+									mediaId={movie.id}
+									title={movie.title}
+									imgUrl={movie.poster_path}
+									type="movie"
+								/>
+							)
+						})
+				}
+				{
+					// biome-ignore lint/complexity/useOptionalChain:
+					seriesData &&
+						seriesData.series &&
+						seriesData.series.map(serie => {
+							return (
+								<MediaBox
+									key={serie.id}
+									mediaId={serie.id}
+									title={serie.name}
+									imgUrl={serie.poster_path}
+									type="serie"
+								/>
+							)
+						})
+				}
 			</div>
 		</>
 	)

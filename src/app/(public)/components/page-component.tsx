@@ -3,9 +3,10 @@ import { Movie, TVShow } from '@/app/@types/tmbd'
 import MediaBox from '@/components/media-box'
 import { Separator } from '@/components/ui/separator'
 import { useCurrentBreakpoint } from '@/hooks/tailwind/use-current-breakpoint'
-import Header from './header'
 import useDebounce from '@/hooks/use-debounce'
-import { useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import Header from './header'
 import SearchingComponent from './searching-component'
 
 interface PageComponentProps {
@@ -17,9 +18,34 @@ export default function PageComponent({
 	popularTVShows,
 }: PageComponentProps) {
 	const currentBreakpoint = useCurrentBreakpoint()
-	const [searchText, setSearchText] = useState('')
+	const currentPath = `/${window.location.href.split('/').slice(3).join('/')}`
+	const router = useRouter()
+	const pathname = usePathname()
+	const params = new URLSearchParams(useSearchParams().toString())
+	const urlQueryState = params.get('query')
+	const [searchText, setSearchText] = useState(urlQueryState ?? '')
 	const deboundedValue = useDebounce(searchText)
 	const isDeboundedValueEmpty = deboundedValue.length === 0
+
+	useEffect(() => {
+		let newPath = '/'
+		if (!isDeboundedValueEmpty) {
+			console.log(deboundedValue)
+			params.set('query', deboundedValue)
+			newPath = `${pathname}?${params.toString()}`
+		}
+
+		if (currentPath !== newPath) {
+			router.push(newPath)
+		}
+	}, [
+		deboundedValue,
+		isDeboundedValueEmpty,
+		params,
+		pathname,
+		router,
+		currentPath,
+	])
 
 	return (
 		<>
@@ -41,6 +67,8 @@ export default function PageComponent({
 											key={movie.id}
 											title={movie.title}
 											imgUrl={movie.poster_path}
+											type="movie"
+											mediaId={movie.id}
 										/>
 									)
 								})}
@@ -53,12 +81,14 @@ export default function PageComponent({
 								<Separator className="h-1 max-w-36 bg-app-red" />
 							</h4>
 							<div className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows flex gap-4 overflow-x-auto">
-								{popularTVShows.map((movie: TVShow) => {
+								{popularTVShows.map((serie: TVShow) => {
 									return (
 										<MediaBox
-											key={movie.id}
-											title={movie.name}
-											imgUrl={movie.poster_path}
+											key={serie.id}
+											title={serie.name}
+											imgUrl={serie.poster_path}
+											type="serie"
+											mediaId={serie.id}
 										/>
 									)
 								})}
