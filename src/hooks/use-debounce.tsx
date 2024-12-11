@@ -12,12 +12,18 @@ export function useDebounce<T>(
 	const { delay } = config
 
 	useEffect(() => {
-		const id = setTimeout(() => {
+		let id: NodeJS.Timeout | undefined
+
+		if (typeof value === 'string' && value.length === 0) {
 			setDebouncedValue(value)
-		}, delay)
+		} else {
+			id = setTimeout(() => {
+				setDebouncedValue(value)
+			}, delay)
+		}
 
 		return () => {
-			clearTimeout(id)
+			if (id) clearTimeout(id)
 		}
 	}, [value, delay])
 
