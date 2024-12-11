@@ -8,7 +8,9 @@ const ImageComponent = ({ className, ...props }: ImageProps) => {
 	const [isLoaded, setIsLoaded] = useState(false)
 	return (
 		<>
-			<Skeleton className={cn('h-32 w-56', className, { hidden: isLoaded })} />
+			<Skeleton
+				className={cn('h-72 w-48 lg:h-96 lg:w-56', { hidden: isLoaded })}
+			/>
 			<Image
 				{...props}
 				className={cn(className, { invisible: !isLoaded })}

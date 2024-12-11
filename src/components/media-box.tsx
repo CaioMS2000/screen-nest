@@ -33,7 +33,8 @@ export default function MediaBox({
 				width={0}
 				height={0}
 				sizes="600px"
-				className="w-96 min-w-96"
+				// className="w-48 md:w-56 lg:w-64"
+				className="min-w-72"
 				src={`https://image.tmdb.org/t/p/w500${imgUrl}`}
 				alt={title}
 			/>
