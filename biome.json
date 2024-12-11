@@ -57,6 +57,6 @@
 		}
 	},
 	"files": {
-		"ignore": ["node_modules", "tsconfig*.json", "public/*", "src/prisma", ".next", "*globals.css", "*.json", "*.config.ts"]
+		"ignore": ["node_modules", "tsconfig*.json", "public/*", "src/prisma", ".next", "*globals.css", "*.json", "*.config.ts", "src/components/houstonicons/*"]
 	}
 }

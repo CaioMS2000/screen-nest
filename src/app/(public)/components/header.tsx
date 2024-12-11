@@ -1,8 +1,8 @@
 'use client'
+import { Search01Icon } from '@/components/houstonicons/search'
 import ImageComponent from '@/components/image-component'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Search } from 'lucide-react'
+import { Button } from '@nextui-org/button'
+import { Input } from '@nextui-org/input'
 
 interface HeaderProps {
 	searchInputConfig: {
@@ -27,11 +27,11 @@ export default function Header({
 						alt="logo"
 					/>
 					<div className="flex items-center gap-2">
-						<Search className="size-10" />
 						<Input
-							className="w-96"
+							className="w-96 placeholder:font-bold placeholder:text-white"
 							placeholder="Pesquisar..."
 							value={inputValue}
+							startContent={<Search01Icon className="size-5 text-white" />}
 							onChange={e => inputChange(e.target.value)}
 						/>
 					</div>

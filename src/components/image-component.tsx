@@ -2,7 +2,7 @@
 import { cn } from '@/lib/utils'
 import Image, { ImageProps } from 'next/image'
 import { useState } from 'react'
-import { Skeleton } from './ui/skeleton'
+import { Skeleton } from '@nextui-org/skeleton'
 
 const ImageComponent = ({ className, ...props }: ImageProps) => {
 	const [isLoaded, setIsLoaded] = useState(false)

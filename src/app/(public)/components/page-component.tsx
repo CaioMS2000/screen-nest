@@ -1,7 +1,7 @@
 'use client'
 import { Movie, TVShow } from '@/app/@types/tmbd'
 import MediaBox from '@/components/media-box'
-import { Separator } from '@/components/ui/separator'
+import { Spacer } from '@nextui-org/spacer'
 import { useCurrentBreakpoint } from '@/hooks/tailwind/use-current-breakpoint'
 import useDebounce from '@/hooks/use-debounce'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -58,7 +58,7 @@ export default function PageComponent({
 						<section className="section">
 							<h4 className="mb-1 font-bold text-xl">
 								<span>Filmes populares</span>
-								<Separator className="h-1 max-w-36 bg-app-red" />
+								<Spacer className="h-1 max-w-36 bg-app-red" />
 							</h4>
 							<div className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows flex gap-4 overflow-x-auto">
 								{popularMovies.map((movie: Movie) => {
@@ -78,7 +78,7 @@ export default function PageComponent({
 						<section className="section">
 							<h4 className="mb-1 font-bold text-xl">
 								<span>Séries populares</span>
-								<Separator className="h-1 max-w-36 bg-app-red" />
+								<Spacer className="h-1 max-w-36 bg-app-red" />
 							</h4>
 							<div className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows flex gap-4 overflow-x-auto">
 								{popularTVShows.map((serie: TVShow) => {
