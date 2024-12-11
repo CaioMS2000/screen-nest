@@ -14,7 +14,10 @@ export default function RootLayout({
 	children: React.ReactNode
 }>) {
 	return (
-		<html lang="en">
+		<html
+			lang="en"
+			className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows"
+		>
 			<body className={'dark h-screen bg-app-black antialiased'}>
 				<Providers>{children}</Providers>
 			</body>
