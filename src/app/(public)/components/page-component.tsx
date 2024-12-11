@@ -18,7 +18,6 @@ export default function PageComponent({
 	popularTVShows,
 }: PageComponentProps) {
 	const currentBreakpoint = useCurrentBreakpoint()
-	const currentPath = `/${window.location.href.split('/').slice(3).join('/')}`
 	const router = useRouter()
 	const pathname = usePathname()
 	const params = new URLSearchParams(useSearchParams().toString())
@@ -28,23 +27,24 @@ export default function PageComponent({
 	const isDeboundedValueEmpty = deboundedValue.length === 0
 
 	useEffect(() => {
-		let newPath = '/'
+		const newParams = new URLSearchParams()
 		if (!isDeboundedValueEmpty) {
-			console.log(deboundedValue)
-			params.set('query', deboundedValue)
-			newPath = `${pathname}?${params.toString()}`
-		}
-
-		if (currentPath !== newPath) {
-			router.push(newPath)
+			if (!urlQueryState || urlQueryState !== deboundedValue) {
+				newParams.set('query', deboundedValue)
+				router.push(`${pathname}?${newParams.toString()}`)
+			}
+		} else {
+			if (params.size > 0) {
+				router.push(`${pathname}`)
+			}
 		}
 	}, [
-		deboundedValue,
 		isDeboundedValueEmpty,
 		params,
-		pathname,
 		router,
-		currentPath,
+		urlQueryState,
+		deboundedValue,
+		pathname,
 	])
 
 	return (
