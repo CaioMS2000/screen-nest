@@ -4,6 +4,7 @@ import ImageComponent from '@/components/image-component'
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
 import { useRouter } from 'next/navigation'
+import ActionArea from './action-area'
 
 interface HeaderProps {
 	searchInputConfig: {
@@ -40,19 +41,8 @@ export default function Header({
 					</div>
 				</div>
 
-				<div className="flex items-center gap-2">
-					<Button
-						className="bg-zinc-700 font-semibold text-white"
-						onClick={() => router.push('/login')}
-					>
-						Login
-					</Button>
-					<Button
-						className="bg-app-red font-semibold text-white"
-						onClick={() => router.push('/register')}
-					>
-						Registrar
-					</Button>
+				<div className="flex items-center gap-4">
+					<ActionArea />
 				</div>
 			</header>
 		</>

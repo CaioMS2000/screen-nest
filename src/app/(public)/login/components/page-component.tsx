@@ -25,7 +25,7 @@ export default function PageComponent() {
 	} = useForm({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
-			username: params.get('username') ?? 'username-not-from-url',
+			username: params.get('username') ?? 'username',
 			password: '123456789',
 		},
 	})
