@@ -31,6 +31,7 @@ export default function SearchingComponent({ query }: SearchingComponentProps) {
 	useEffect(() => {
 		if (moviesIsFetched) {
 			// console.log(moviesData)
+			console.log(moviesData?.movies[0])
 		}
 	}, [moviesData, moviesIsFetched])
 

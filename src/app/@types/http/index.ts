@@ -1,15 +1,15 @@
-import { Movie, TVShow } from '../tmbd'
+import { NotDetailedMovie, NotDetailedTVShow } from '../tmbd'
 
 export interface FetchMoviesResponse {
 	page: number
 	totalPages: number
 	totalResults: number
-	movies: Movie[]
+	movies: NotDetailedMovie[]
 }
 
 export interface FetchSeriesResponse {
 	page: number
 	totalPages: number
 	totalResults: number
-	series: TVShow[]
+	series: NotDetailedTVShow[]
 }

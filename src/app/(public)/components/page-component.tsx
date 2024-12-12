@@ -1,17 +1,17 @@
 'use client'
-import { Movie, TVShow } from '@/app/@types/tmbd'
+import { NotDetailedMovie, NotDetailedTVShow } from '@/app/@types/tmbd'
 import MediaBox from '@/components/media-box'
-import { Spacer } from '@nextui-org/spacer'
 import { useCurrentBreakpoint } from '@/hooks/tailwind/use-current-breakpoint'
 import useDebounce from '@/hooks/use-debounce'
+import { Spacer } from '@nextui-org/spacer'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Header from './header'
 import SearchingComponent from './searching-component'
 
 interface PageComponentProps {
-	popularMovies: Movie[]
-	popularTVShows: TVShow[]
+	popularMovies: NotDetailedMovie[]
+	popularTVShows: NotDetailedTVShow[]
 }
 export default function PageComponent({
 	popularMovies,
@@ -61,7 +61,7 @@ export default function PageComponent({
 								<Spacer className="h-1 max-w-36 bg-app-red" />
 							</h4>
 							<div className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows flex gap-4 overflow-x-auto">
-								{popularMovies.map((movie: Movie) => {
+								{popularMovies.map((movie: NotDetailedMovie) => {
 									return (
 										<MediaBox
 											key={movie.id}
@@ -81,7 +81,7 @@ export default function PageComponent({
 								<Spacer className="h-1 max-w-36 bg-app-red" />
 							</h4>
 							<div className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows flex gap-4 overflow-x-auto">
-								{popularTVShows.map((serie: TVShow) => {
+								{popularTVShows.map((serie: NotDetailedTVShow) => {
 									return (
 										<MediaBox
 											key={serie.id}
