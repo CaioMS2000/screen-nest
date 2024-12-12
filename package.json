@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.1",
     "@houstonicons/react": "^1.1.1",
     "@nextui-org/react": "^2.6.8",
     "@prisma/client": "^6.0.1",
@@ -21,6 +22,7 @@
     "next": "15.0.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.0",
     "tailwind-merge": "^2.5.5",
     "tailwind-scrollbar": "^3.1.0",
     "tailwindcss-animate": "^1.0.7",

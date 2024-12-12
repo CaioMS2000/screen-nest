@@ -17,7 +17,13 @@ interface PageParams {
 export default async function MoviePage({ params }: PageParams) {
 	const _params = await params
 	const { id } = _params
-	const response = await get(`/movie/${id}?language=pt-BR`)
+	const response = await get(`/movie/${id}?language=pt-BR`, {
+		cache: 'force-cache',
+		next: {
+			revalidate: 1 * 60 * 60 * 24,
+			tags: ['movie', `movie-${id}`],
+		},
+	})
 	const data: Movie = await response.json()
 
 	return (

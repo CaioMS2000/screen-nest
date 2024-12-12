@@ -16,7 +16,13 @@ interface PageParams {
 export default async function SeriePage({ params }: PageParams) {
 	const _params = await params
 	const { id } = _params
-	const response = await get(`/tv/${id}`)
+	const response = await get(`/tv/${id}`, {
+		cache: 'force-cache',
+		next: {
+			revalidate: 1 * 60 * 60 * 24,
+			tags: ['tv', `tv-${id}`],
+		},
+	})
 	const data: TVShow = await response.json()
 
 	return (
