@@ -1,6 +1,6 @@
 'use server'
 import { get } from '@/utils/tmdb'
-import { FetchMoviesResponse, FetchSeriesResponse } from './@types/http'
+import { FetchMoviesResponse, FetchSeriesResponse } from '../@types/http'
 
 export async function fetchMovies(query: string): Promise<FetchMoviesResponse> {
 	const response = await get(`/search/movie?query=${query}&language=pt-BR`, {
