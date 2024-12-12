@@ -1,4 +1,5 @@
 'use client'
+import { LoginFormData } from '@/app/@types/zod'
 import { loginFormSchema } from '@/app/@types/zod/schemas'
 import { loginAction } from '@/app/actions/login'
 import { EyeIcon, EyeIconSlash } from '@/components/houstonicons/eye'
@@ -7,11 +8,14 @@ import { UserCircleIcon } from '@/components/houstonicons/user'
 import ImageComponent from '@/components/image-component'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input } from '@nextui-org/react'
+import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 export default function PageComponent() {
 	const [isVisible, setIsVisible] = useState(false)
+	const params = useSearchParams()
 	const toggleVisibility = () => setIsVisible(!isVisible)
 	const {
 		handleSubmit,
@@ -21,16 +25,23 @@ export default function PageComponent() {
 	} = useForm({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
-			username: 'username',
+			username: params.get('username') ?? 'username-not-from-url',
 			password: '123456789',
 		},
 	})
 
-	useEffect(() => {
-		if (errors) {
-			console.log(errors)
+	const handleLogin = async (data: LoginFormData) => {
+		const result = await loginAction(data)
+
+		if (!result.success && result.message) {
+			toast.error(result.message)
+			return
 		}
-	}, [errors])
+		if (result.success) {
+			toast.success('Login realizado com sucesso')
+			reset()
+		}
+	}
 
 	return (
 		<>
@@ -45,7 +56,7 @@ export default function PageComponent() {
 				/>
 				<h1 className="font-bold text-2xl">Screen Nest - Faça login</h1>
 				<form
-					onSubmit={handleSubmit(loginAction)}
+					onSubmit={handleSubmit(handleLogin)}
 					className="mt-10 flex flex-col gap-5"
 				>
 					<Input

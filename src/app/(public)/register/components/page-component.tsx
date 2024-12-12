@@ -1,4 +1,5 @@
 'use client'
+import { RegisterFormData } from '@/app/@types/zod'
 import { registerFormSchema } from '@/app/@types/zod/schemas'
 import { registerAction } from '@/app/actions/register'
 import { EyeIcon, EyeIconSlash } from '@/components/houstonicons/eye'
@@ -10,6 +11,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 export default function PageComponent() {
 	const [isVisible, setIsVisible] = useState(true)
@@ -28,9 +30,22 @@ export default function PageComponent() {
 		},
 	})
 
+	const handleRegister = async (data: RegisterFormData) => {
+		const response = await registerAction(data)
+
+		if (!response.success && response.message) {
+			toast.error(response.message)
+		} else {
+			toast.success('Cadastro realizado com sucesso')
+			reset()
+		}
+	}
+
 	useEffect(() => {
-		if (errors) {
-			console.log(errors)
+		if (errors && Object.keys(errors).length > 0) {
+			const error = Object.values(errors)[0]
+
+			toast.error(error.message)
 		}
 	}, [errors])
 
@@ -47,7 +62,7 @@ export default function PageComponent() {
 				/>
 				<h1 className="font-bold text-2xl">Screen Nest - Crie seu cadastro</h1>
 				<form
-					onSubmit={handleSubmit(registerAction)}
+					onSubmit={handleSubmit(handleRegister)}
 					className="mt-10 flex flex-col gap-5"
 				>
 					<Input
@@ -95,7 +110,7 @@ export default function PageComponent() {
 						size="lg"
 					/>
 					<Button className="w-full bg-app-red" color="default" type="submit">
-						<span className="font-bold text-lg">Entrar</span>
+						<span className="font-bold text-lg">Cadastrar</span>
 					</Button>
 				</form>
 			</div>
