@@ -56,7 +56,9 @@ export default {
 				red: '#E50914',
 				"light-yellow": '#FFFF00',
 				"yellow": '#FFE400',
-				black: '#191818'
+				black: '#191818',
+				"black-100": "#1a1a1a",
+				"black-500": "#121212"
 			}
   		},
   		borderRadius: {

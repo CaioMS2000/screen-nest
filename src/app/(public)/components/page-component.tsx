@@ -52,15 +52,15 @@ export default function PageComponent({
 			<Header
 				searchInputConfig={{ inputValue: searchText, inputChange: setSearchText }}
 			/>
-			<main className="main mt-10 space-y-12 bg-app-black px-3">
+			<main className="main mt-10 space-y-12 bg-app-black-500 px-3">
 				{isDeboundedValueEmpty && (
 					<>
-						<section className="section">
+						<section className="space-y-5">
 							<h4 className="mb-1 font-bold text-xl">
 								<span>Filmes populares</span>
-								<Spacer className="h-1 max-w-36 bg-app-red" />
+								<Spacer className="h-1 w-full max-w-36 bg-app-red" />
 							</h4>
-							<div className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows flex gap-4 overflow-x-auto">
+							<div className="grid grid-cols-3 gap-y-5 justify-items-center">
 								{popularMovies.map((movie: NotDetailedMovie) => {
 									return (
 										<MediaBox
@@ -75,12 +75,12 @@ export default function PageComponent({
 							</div>
 						</section>
 
-						<section className="section">
+						<section className="space-y-5">
 							<h4 className="mb-1 font-bold text-xl">
 								<span>Séries populares</span>
-								<Spacer className="h-1 max-w-36 bg-app-red" />
+								<Spacer className="h-1 w-full max-w-36 bg-app-red" />
 							</h4>
-							<div className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows flex gap-4 overflow-x-auto">
+							<div className="grid grid-cols-3 gap-y-5 justify-items-center">
 								{popularTVShows.map((serie: NotDetailedTVShow) => {
 									return (
 										<MediaBox

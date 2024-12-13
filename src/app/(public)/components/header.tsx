@@ -20,7 +20,7 @@ export default function Header({
 
 	return (
 		<>
-			<header className="flex items-center justify-between bg-zinc-800 px-4 py-2 text-white">
+			<header className="flex items-center justify-between bg-app-black-100 px-4 py-2 text-white">
 				<div className="flex items-center gap-4">
 					<ImageComponent
 						width={0}
