@@ -52,7 +52,7 @@ export default function PageComponent({
 			<Header
 				searchInputConfig={{ inputValue: searchText, inputChange: setSearchText }}
 			/>
-			<main className="main mt-10 space-y-12 bg-app-black-500 px-3">
+			<main className="main mt-10 space-y-12 bg-app-black-500 px-3 pb-10">
 				{isDeboundedValueEmpty && (
 					<>
 						<section className="space-y-5">
@@ -60,7 +60,7 @@ export default function PageComponent({
 								<span>Filmes populares</span>
 								<Spacer className="h-1 w-full max-w-36 bg-app-red" />
 							</h4>
-							<div className="grid grid-cols-3 gap-y-5 justify-items-center">
+							<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 								{popularMovies.map((movie: NotDetailedMovie) => {
 									return (
 										<MediaBox
@@ -69,6 +69,8 @@ export default function PageComponent({
 											imgUrl={movie.poster_path}
 											type="movie"
 											mediaId={movie.id}
+											release_date={movie.release_date}
+											vote_average={movie.vote_average}
 										/>
 									)
 								})}
@@ -80,7 +82,7 @@ export default function PageComponent({
 								<span>Séries populares</span>
 								<Spacer className="h-1 w-full max-w-36 bg-app-red" />
 							</h4>
-							<div className="grid grid-cols-3 gap-y-5 justify-items-center">
+							<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 								{popularTVShows.map((serie: NotDetailedTVShow) => {
 									return (
 										<MediaBox
@@ -89,6 +91,8 @@ export default function PageComponent({
 											imgUrl={serie.poster_path}
 											type="serie"
 											mediaId={serie.id}
+											release_date={serie.first_air_date}
+											vote_average={serie.vote_average}
 										/>
 									)
 								})}
