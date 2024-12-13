@@ -49,7 +49,7 @@ export default function MediaBox({
 					<h3 className="font-semibold text-lg leading-tight">{title}</h3>
 					<div className="flex items-center gap-1 text-yellow-500">
 						<StarIcon className="size-5 text-yellow-400" />
-						<span className="text-sm">{vote_average}</span>
+						<span className="text-sm">{vote_average.toFixed(1)}</span>
 					</div>
 				</div>
 				<div className="mt-1 flex items-center gap-2 text-gray-400 text-sm">
