@@ -4,6 +4,7 @@ import ImageComponent from '@/components/image-component'
 import { Input } from '@nextui-org/input'
 import { useRouter } from 'next/navigation'
 import ActionArea from './action-area'
+import { Film01Icon } from '@/components/houstonicons/film'
 
 interface HeaderProps {
 	searchInputConfig: {
@@ -25,24 +26,8 @@ export default function Header({
 						className="flex cursor-pointer items-center gap-2"
 						onClick={() => router.push('/')}
 					>
-						<ImageComponent
-							width={0}
-							height={0}
-							sizes="600px"
-							className="w-16"
-							src="/images/video.png"
-							alt="logo"
-						/>
+						<Film01Icon className="text-app-red size-10" />
 						<h3 className="font-bold text-lg">Screen Nest</h3>
-					</div>
-					<div className="flex items-center gap-2">
-						<Input
-							className="w-96 placeholder:font-bold placeholder:text-white"
-							placeholder="Pesquisar..."
-							value={inputValue}
-							startContent={<Search01Icon className="size-5 text-white" />}
-							onChange={e => inputChange(e.target.value)}
-						/>
 					</div>
 				</div>
 
@@ -50,6 +35,15 @@ export default function Header({
 					<ActionArea />
 				</div>
 			</header>
+
+			<Input
+				className="mx-auto mt-7 w-[500px] placeholder:font-bold placeholder:text-white"
+				placeholder="Pesquisar..."
+				value={inputValue}
+				size="lg"
+				startContent={<Search01Icon className="size-5 text-white" />}
+				onChange={e => inputChange(e.target.value)}
+			/>
 		</>
 	)
 }
