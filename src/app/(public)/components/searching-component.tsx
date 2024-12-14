@@ -31,19 +31,20 @@ export default function SearchingComponent({ query }: SearchingComponentProps) {
 	useEffect(() => {
 		if (moviesIsFetched) {
 			// console.log(moviesData)
-			console.log(moviesData?.movies[0])
+			// console.log(moviesData?.movies[0])
 		}
 	}, [moviesData, moviesIsFetched])
 
 	useEffect(() => {
 		if (seriesIsFetched) {
 			// console.log(seriesData)
+			// console.log(seriesData?.series[0])
 		}
 	}, [seriesData, seriesIsFetched])
 
 	return (
 		<>
-			<div className="grid grid-cols-1 gap-x-1 gap-y-3 bg-transparent md:grid-cols-2 md:gap-y-5 lg:grid-cols-3 lg:gap-y-8 xl:grid-cols-4">
+			<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 				{
 					// biome-ignore lint/complexity/useOptionalChain:
 					moviesData &&
@@ -51,10 +52,12 @@ export default function SearchingComponent({ query }: SearchingComponentProps) {
 						moviesData.movies.map(movie => {
 							return (
 								<MediaBox
-									key={movie.id}
+									key={`movie-${movie.id}`}
 									mediaId={movie.id}
 									title={movie.title}
 									imgUrl={movie.poster_path}
+									release_date={movie.release_date}
+									vote_average={movie.vote_average}
 									type="movie"
 									className="mx-auto"
 								/>
@@ -68,10 +71,12 @@ export default function SearchingComponent({ query }: SearchingComponentProps) {
 						seriesData.series.map(serie => {
 							return (
 								<MediaBox
-									key={serie.id}
+									key={`serie-${serie.id}`}
 									mediaId={serie.id}
 									title={serie.name}
 									imgUrl={serie.poster_path}
+									release_date={serie.first_air_date}
+									vote_average={serie.vote_average}
 									type="serie"
 								/>
 							)

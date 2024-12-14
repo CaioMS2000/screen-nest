@@ -64,7 +64,7 @@ export default function PageComponent({
 								{popularMovies.map((movie: NotDetailedMovie) => {
 									return (
 										<MediaBox
-											key={movie.id}
+											key={`movie-${movie.id}`}
 											title={movie.title}
 											imgUrl={movie.poster_path}
 											type="movie"
@@ -86,7 +86,7 @@ export default function PageComponent({
 								{popularTVShows.map((serie: NotDetailedTVShow) => {
 									return (
 										<MediaBox
-											key={serie.id}
+											key={`serie-${serie.id}`}
 											title={serie.name}
 											imgUrl={serie.poster_path}
 											type="serie"
