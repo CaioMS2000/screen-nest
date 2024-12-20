@@ -42,6 +42,7 @@ export default function Header({
 				value={inputValue}
 				size="lg"
 				startContent={<Search01Icon className="size-5 text-white" />}
+				isClearable
 				onChange={e => inputChange(e.target.value)}
 			/>
 		</>
