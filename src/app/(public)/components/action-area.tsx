@@ -3,9 +3,7 @@
 import { logoutAction } from '@/app/actions/logout'
 import { TransitionLeftIcon } from '@/components/houstonicons/transition-left'
 import { UserSquareIcon } from '@/components/houstonicons/user'
-import { COOKIE_USERNAME } from '@/constants/http'
 import { Button } from '@nextui-org/react'
-import { getCookie } from 'cookies-next/client'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
