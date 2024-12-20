@@ -8,13 +8,33 @@ datasource db {
 }
 
 model User {
-  id String @id @default(cuid())
-  username String @unique
+  id           String @id @default(cuid())
+  username     String @unique
   passwordHash String @map("password_hash")
-  name String
+  name         String
+
+  watched   Media[] @relation("watched")
+  watchList Media[] @relation("watchList")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+model Media {
+  id     String    @id @default(cuid())
+  imdbId String    @unique @map("imdb_id")
+  type   MediaType
+  
+  interestedUser   User?     @relation("watchList", fields: [interestedUserId], references: [id])
+  interestedUserId String?
+  
+  watchedUser   User?     @relation("watched", fields: [watchedUserId], references: [id])
+  watchedUserId String?
+}
+
+enum MediaType {
+  SERIES
+  MOVIE
 }
