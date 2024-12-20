@@ -9,9 +9,13 @@ import { getCookie } from 'cookies-next/client'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
-export default function ActionArea() {
+interface ActionAreaProps {
+	usernameFromCookies: string | undefined
+}
+
+export default function ActionArea({ usernameFromCookies }: ActionAreaProps) {
 	const router = useRouter()
-	const username = getCookie(COOKIE_USERNAME)
+	const username = usernameFromCookies
 
 	console.log(username)
 

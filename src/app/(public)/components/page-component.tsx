@@ -1,7 +1,6 @@
 'use client'
 import { NotDetailedMovie, NotDetailedTVShow } from '@/app/@types/tmbd'
 import MediaBox from '@/components/media-box'
-import { useCurrentBreakpoint } from '@/hooks/tailwind/use-current-breakpoint'
 import useDebounce from '@/hooks/use-debounce'
 import { Spacer } from '@nextui-org/spacer'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -10,14 +9,15 @@ import Header from './header'
 import SearchingComponent from './searching-component'
 
 interface PageComponentProps {
+	usernameFromCookies: string | undefined
 	popularMovies: NotDetailedMovie[]
 	popularTVShows: NotDetailedTVShow[]
 }
 export default function PageComponent({
 	popularMovies,
 	popularTVShows,
+	usernameFromCookies,
 }: PageComponentProps) {
-	const currentBreakpoint = useCurrentBreakpoint()
 	const router = useRouter()
 	const pathname = usePathname()
 	const params = new URLSearchParams(useSearchParams().toString())
@@ -51,6 +51,7 @@ export default function PageComponent({
 		<>
 			<Header
 				searchInputConfig={{ inputValue: searchText, inputChange: setSearchText }}
+				usernameFromCookies={usernameFromCookies}
 			/>
 			<main className="main mt-10 space-y-12 bg-app-black-500 px-3 pb-10">
 				{isDeboundedValueEmpty && (
