@@ -28,10 +28,12 @@ model Media {
   type   MediaType
   
   interestedUser   User?     @relation("watchList", fields: [interestedUserId], references: [id])
-  interestedUserId String?
+  interestedUserId String? @map("interested_user_id")
   
   watchedUser   User?     @relation("watched", fields: [watchedUserId], references: [id])
-  watchedUserId String?
+  watchedUserId String? @map("watched_user_id")
+
+  @@map("medias")
 }
 
 enum MediaType {
