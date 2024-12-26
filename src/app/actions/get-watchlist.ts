@@ -12,7 +12,6 @@ export async function getWatchListAction(username: string) {
 		},
 	})
 
-	console.log(user.watchList)
 	const medias: Media[] = user.watchList
 
 	return medias
