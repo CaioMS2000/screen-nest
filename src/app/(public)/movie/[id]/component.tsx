@@ -9,17 +9,26 @@ import { StarIcon } from '@/components/houstonicons/star'
 import { CheckmarkSquare02Icon } from '@/components/houstonicons/check'
 import { Clock01Icon } from '@/components/houstonicons/clock'
 import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
+import { User } from '@/app/@types/entities/user'
 
 interface MediaDetailsPageProps {
 	movie: Movie
+	user?: User
 }
 
-export function MediaDetailsPage({ movie }: MediaDetailsPageProps) {
+export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 	const movieWithCredits = movie as unknown as Movie & {
 		credits: MovieCredits
 	}
 	const router = useRouter()
-	const isInWatchlist = true
+	let isInWatchlist = false
+	let isInWatchedlist = false
+
+	if (user) {
+		isInWatchlist = user.watchList.some(media => media.imdbId === movie.imdb_id)
+		isInWatchedlist = user.watched.some(media => media.imdbId === movie.imdb_id)
+	}
+
 	return (
 		<div className="min-h-screen bg-[#121212] pb-12">
 			{/* Hero Section */}

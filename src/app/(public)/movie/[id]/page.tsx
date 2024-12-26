@@ -1,13 +1,12 @@
 import { Movie } from '@/app/@types/tmbd'
-import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
-import ImageComponent from '@/components/image-component'
-import MediaBox from '@/components/media-box'
 import { get } from '@/utils/tmdb'
-import { Chip } from '@nextui-org/chip'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
-import Link from 'next/link'
 import { MediaDetailsPage } from './component'
+// import { CookieManager } from '@/utils/cookie-manager'
+import { COOKIE_USERNAME } from '@/constants/http'
+import CookieManager from '@/utils/cookie-manager'
+import { getUserAction } from '@/app/actions/get-user'
 
 dayjs.locale(ptBR)
 
@@ -28,7 +27,9 @@ export default async function MoviePage({ params }: PageParams) {
 			},
 		}
 	)
-	const data: Movie = await response.json()
+	const movie: Movie = await response.json()
+	const username = await CookieManager.getCookie(COOKIE_USERNAME)
+	const user = await getUserAction(username?.value)
 
-	return <MediaDetailsPage movie={data} />
+	return <MediaDetailsPage movie={movie} user={user} />
 }
