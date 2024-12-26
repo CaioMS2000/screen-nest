@@ -10,6 +10,8 @@ import { CheckmarkSquare02Icon } from '@/components/houstonicons/check'
 import { Clock01Icon } from '@/components/houstonicons/clock'
 import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
 import { User } from '@/app/@types/entities/user'
+import { PlusSignSquareIcon } from '@/components/houstonicons/plus'
+import { AlertCircleIcon } from '@/components/houstonicons/alert'
 
 interface MediaDetailsPageProps {
 	movie: Movie
@@ -67,7 +69,6 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 					{/* Details */}
 					<div className="flex-1">
 						<h1 className="mb-2 font-bold text-4xl">{movie.title}</h1>
-
 						<div className="mb-6 flex items-center gap-4 text-gray-400">
 							<span>{dayjs(movie.release_date).get('y')}</span>
 							<span>•</span>
@@ -84,27 +85,50 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 							</div>
 						</div>
 
-						<button
-							onClick={() => {}}
-							className={`mb-8 flex items-center gap-2 rounded-lg px-6 py-3 transition-colors ${
-								isInWatchlist
-									? 'bg-green-500 hover:bg-green-600'
-									: 'bg-red-500 hover:bg-red-600'
-							}`}
-						>
-							{isInWatchlist ? (
-								<>
-									<CheckmarkSquare02Icon className="size-5 text-white" />
-									<span>Na Lista</span>
-								</>
-							) : (
-								<>
-									<Clock01Icon className="size-5 text-white" />
-									<span>Adicionar à Lista</span>
-								</>
-							)}
-						</button>
-
+						{!user && (
+							<span className="mb-8 font-bold text-red-500">Você não está logado</span>
+						)}
+						{user && isInWatchlist && (
+							<button
+								className={
+									'mb-8 flex items-center gap-2 rounded-lg bg-green-500 px-6 py-3 transition-colors hover:bg-green-600'
+								}
+							>
+								<CheckmarkSquare02Icon className="size-5 text-white" />
+								<span>Na Lista</span>
+							</button>
+						)}
+						{user && !isInWatchlist && (
+							<button
+								className={
+									'mb-8 flex items-center gap-2 rounded-lg bg-red-500 px-6 py-3 transition-colors hover:bg-red-600'
+								}
+							>
+								<Clock01Icon className="size-5 text-white" />
+								<span>Adicionar à lista</span>
+							</button>
+						)}
+						{user && !isInWatchedlist && (
+							<button
+								className={
+									'mb-8 flex items-center gap-2 rounded-lg bg-pink-500 px-6 py-3 transition-colors hover:bg-pink-600'
+								}
+							>
+								<PlusSignSquareIcon className="size-5 text-white" />
+								<span>Marcar como assistido</span>
+							</button>
+						)}
+						{user && isInWatchedlist && (
+							<button
+								className={
+									'mb-8 flex items-center gap-2 rounded-lg bg-yellow-500 px-6 py-3 transition-colors hover:bg-yellow-600'
+								}
+								disabled
+							>
+								<AlertCircleIcon className="size-5 text-white" />
+								<span>Você ja assistiu</span>
+							</button>
+						)}
 						<div className="space-y-6">
 							<div>
 								<h2 className="mb-2 font-semibold text-xl">Sinopse</h2>

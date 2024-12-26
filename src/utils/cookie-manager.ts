@@ -8,18 +8,14 @@ export class CookieManager {
 	}
 
 	static async getCookie(name: string) {
-		if (!CookieManager.cookieStore) {
-			CookieManager.cookieStore = cookies()
-		}
+		CookieManager.cookieStore = cookies()
 
 		const cookieStore = await CookieManager.cookieStore
 		return cookieStore.get(name)
 	}
 
 	static async setCookie(name: string, value: string, options = {}) {
-		if (!CookieManager.cookieStore) {
-			CookieManager.cookieStore = cookies()
-		}
+		CookieManager.cookieStore = cookies()
 
 		const cookieStore = await CookieManager.cookieStore
 
