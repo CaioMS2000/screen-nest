@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Movie, MovieCredits } from '@/app/@types/tmbd'
+import { TVShow } from '@/app/@types/tmbd'
 import { useRouter } from 'next/navigation'
 import ImageComponent from '@/components/image-component'
 import dayjs from 'dayjs'
@@ -15,21 +15,22 @@ import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { UserCircleIcon } from '@/components/houstonicons/user'
 
 interface MediaDetailsPageProps {
-	movie: Movie
+	serie: TVShow
 	user?: User
 }
 
-export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
-	const movieWithCredits = movie as unknown as Movie & {
-		credits: MovieCredits
-	}
+export function MediaDetailsPage({ serie, user }: MediaDetailsPageProps) {
 	const router = useRouter()
 	let isInWatchlist = false
 	let isInWatchedlist = false
 
 	if (user) {
-		isInWatchlist = user.watchList.some(media => media.imdbId === movie.imdb_id)
-		isInWatchedlist = user.watched.some(media => media.imdbId === movie.imdb_id)
+		isInWatchlist = user.watchList.some(
+			media => media.imdbId === serie.id.toString()
+		)
+		isInWatchedlist = user.watched.some(
+			media => media.imdbId === serie.id.toString()
+		)
 	}
 
 	return (
@@ -48,8 +49,8 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 						height={0}
 						sizes="2000px"
 						className="h-full w-full object-cover"
-						src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-						alt={movie.title}
+						src={`https://image.tmdb.org/t/p/original${serie.poster_path}`}
+						alt={serie.name}
 					/>
 					<div className="absolute inset-0 bg-gradient-to-t from-[#121212] to-transparent" />
 				</div>
@@ -61,28 +62,28 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 					{/* Poster */}
 					<div className="w-64 flex-shrink-0">
 						<img
-							src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
-							alt={movie.title}
+							src={`https://image.tmdb.org/t/p/w300${serie.poster_path}`}
+							alt={serie.name}
 							className="w-full rounded-lg shadow-xl"
 						/>
 					</div>
 
 					{/* Details */}
 					<div className="flex-1">
-						<h1 className="mb-2 font-bold text-4xl">{movie.title}</h1>
+						<h1 className="mb-2 font-bold text-4xl">{serie.name}</h1>
 						<div className="mb-6 flex items-center gap-4 text-gray-400">
-							<span>{dayjs(movie.release_date).get('y')}</span>
+							<span>{dayjs(serie.first_air_date).get('y')}</span>
 							<span>•</span>
-							<span>{'Filme'}</span>
-							{movie.runtime && (
+							<span>{'Série'}</span>
+							{serie.episode_run_time && serie.episode_run_time[0] && (
 								<>
 									<span>•</span>
-									<span>{convertMinutesToHours(movie.runtime)}</span>
+									<span>{convertMinutesToHours(serie.episode_run_time[0])}</span>
 								</>
 							)}
 							<div className="flex items-center gap-1 text-yellow-500">
 								<StarIcon className="size-5 text-yellow-400" />
-								<span>{movie.vote_average.toFixed(1)}</span>
+								<span>{serie.vote_average.toFixed(1)}</span>
 							</div>
 						</div>
 
@@ -127,19 +128,21 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 								disabled
 							>
 								<AlertCircleIcon className="size-5 text-white" />
-								<span>Você ja assistiu</span>
+								<span>Você já assistiu</span>
 							</button>
 						)}
+
 						<div className="space-y-6">
 							<div>
 								<h2 className="mb-2 font-semibold text-xl">Sinopse</h2>
-								<p className="text-gray-400 leading-relaxed">{movie.overview}</p>
+								<p className="text-gray-400 leading-relaxed">{serie.overview}</p>
 							</div>
-							{movie.genres && (
+
+							{serie.genres && (
 								<div>
 									<h2 className="mb-2 font-semibold text-xl">Gêneros</h2>
 									<div className="flex flex-wrap gap-2">
-										{movie.genres.map(genre => (
+										{serie.genres.map(genre => (
 											<span
 												key={genre.id}
 												className="rounded-full bg-[#2a2a2a] px-3 py-1 text-sm"
@@ -150,53 +153,29 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 									</div>
 								</div>
 							)}
-							<div>
-								<h2 className="text-xl font-semibold mb-2">Elenco Principal</h2>
-								{movieWithCredits.credits &&
-									movieWithCredits.credits.cast.slice(0, 5).map(castMember => (
-										<div key={castMember.id} className="flex items-center gap-2 mb-2">
-											{castMember.profile_path ? (
+
+							{serie.created_by && (
+								<div>
+									<h2 className="text-xl font-semibold mb-2">Criação</h2>
+									{serie.created_by.slice(0, 5).map(creator => (
+										<div key={creator.id} className="flex items-center gap-2 mb-2">
+											{creator.profile_path && (
 												<img
-													src={`https://image.tmdb.org/t/p/w500${castMember.profile_path}`}
-													alt={castMember.name}
+													src={`https://image.tmdb.org/t/p/w500${creator.profile_path}`}
+													alt={creator.name}
 													className="w-10 h-10 rounded-full"
 												/>
-											) : (
+											)}
+											{!creator.profile_path && (
 												<UserCircleIcon className="w-10 h-10 rounded-full text-gray-400" />
 											)}
 											<div>
-												<p className="font-semibold">{castMember.name}</p>
-												<p className="text-gray-400">{castMember.character}</p>
+												<p className="font-semibold">{creator.name}</p>
 											</div>
 										</div>
 									))}
-							</div>
-							{movieWithCredits.credits && (
-								<div>
-									<h2 className="text-xl font-semibold mb-2">Direção</h2>
-									{movieWithCredits.credits.crew
-										.filter(member => member.known_for_department.includes('Directing'))
-										.slice(0, 5)
-										.map(director => (
-											<div key={director.id} className="flex items-center gap-2 mb-2">
-												{director.profile_path && (
-													<img
-														src={`https://image.tmdb.org/t/p/w500${director.profile_path}`}
-														alt={director.name}
-														className="w-10 h-10 rounded-full"
-													/>
-												)}
-												{!director.profile_path && (
-													<UserCircleIcon className="w-10 h-10 rounded-full text-gray-400" />
-												)}
-												<div>
-													<p className="font-semibold">{director.name}</p>
-													<p className="text-gray-400">{director.known_for_department}</p>
-												</div>
-											</div>
-										))}
 								</div>
-							)}{' '}
+							)}
 						</div>
 					</div>
 				</div>
