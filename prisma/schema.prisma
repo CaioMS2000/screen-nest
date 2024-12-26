@@ -24,7 +24,7 @@ model User {
 
 model Media {
   id     String    @id @default(cuid())
-  imdbId String    @unique @map("imdb_id")
+  imdbId String    @map("imdb_id")
   type   MediaType
   
   interestedUser   User?     @relation("watchList", fields: [interestedUserId], references: [id])
@@ -34,6 +34,7 @@ model Media {
   watchedUserId String? @map("watched_user_id")
 
   @@map("medias")
+  @@unique([imdbId, interestedUserId, watchedUserId])
 }
 
 enum MediaType {
