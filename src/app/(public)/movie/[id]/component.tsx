@@ -1,19 +1,22 @@
 'use client'
-import React from 'react'
+import { User } from '@/app/@types/entities/user'
 import { Movie, MovieCredits } from '@/app/@types/tmbd'
-import { useRouter } from 'next/navigation'
-import ImageComponent from '@/components/image-component'
-import dayjs from 'dayjs'
-import { convertMinutesToHours } from '@/utils'
-import { StarIcon } from '@/components/houstonicons/star'
+import { adddMediaToWatchedAction } from '@/app/actions/add-to-watched'
+import { adddMediaToWatchlistAction } from '@/app/actions/add-to-watchlist'
+import { AlertCircleIcon } from '@/components/houstonicons/alert'
+import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
 import { CheckmarkSquare02Icon } from '@/components/houstonicons/check'
 import { Clock01Icon } from '@/components/houstonicons/clock'
-import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
-import { User } from '@/app/@types/entities/user'
 import { PlusSignSquareIcon } from '@/components/houstonicons/plus'
-import { AlertCircleIcon } from '@/components/houstonicons/alert'
+import { StarIcon } from '@/components/houstonicons/star'
 import { UserCircleIcon } from '@/components/houstonicons/user'
+import ImageComponent from '@/components/image-component'
+import { convertMinutesToHours } from '@/utils'
+import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
+import { useRouter } from 'next/navigation'
+import React from 'react'
+import { toast } from 'sonner'
 
 dayjs.locale(ptBR)
 
@@ -33,6 +36,46 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 	if (user) {
 		isInWatchlist = user.watchList.some(media => media.imdbId === movie.imdb_id)
 		isInWatchedlist = user.watched.some(media => media.imdbId === movie.imdb_id)
+	}
+
+	async function handleAdddMediaToWatchlist() {
+		if (!user) {
+			router.push('/login')
+			return
+		}
+
+		const result = await adddMediaToWatchlistAction(
+			'MOVIE',
+			movie.imdb_id,
+			movie.id,
+			user.username
+		)
+
+		if (!result.success) {
+			toast.error('Erro ao adicionar na lista de assistir')
+		} else {
+			toast.success('Adicionado na lista de assistir')
+		}
+	}
+
+	async function handleAdddMediaToWatchedAction() {
+		if (!user) {
+			router.push('/login')
+			return
+		}
+
+		const result = await adddMediaToWatchedAction(
+			'MOVIE',
+			movie.imdb_id,
+			movie.id,
+			user.username
+		)
+
+		if (!result.success) {
+			toast.error('Erro ao adicionar na lista de assistidos')
+		} else {
+			toast.success('Adicionado na lista de assistidos')
+		}
 	}
 
 	return (
@@ -107,6 +150,7 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 								className={
 									'mb-8 flex items-center gap-2 rounded-lg bg-red-500 px-6 py-3 transition-colors hover:bg-red-600'
 								}
+								onClick={handleAdddMediaToWatchlist}
 							>
 								<Clock01Icon className="size-5 text-white" />
 								<span>Adicionar à lista</span>
@@ -117,6 +161,7 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 								className={
 									'mb-8 flex items-center gap-2 rounded-lg bg-pink-500 px-6 py-3 transition-colors hover:bg-pink-600'
 								}
+								onClick={handleAdddMediaToWatchedAction}
 							>
 								<PlusSignSquareIcon className="size-5 text-white" />
 								<span>Marcar como assistido</span>
@@ -142,64 +187,74 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 								<div>
 									<h2 className="mb-2 font-semibold text-xl">Gêneros</h2>
 									<div className="flex flex-wrap gap-2">
-										{movie.genres.map(genre => (
-											<span
-												key={genre.id}
-												className="rounded-full bg-[#2a2a2a] px-3 py-1 text-sm"
-											>
-												{genre.name}
-											</span>
-										))}
+										{movie.genres.map(genre => {
+											return (
+												<span
+													key={genre.id}
+													className="rounded-full bg-[#2a2a2a] px-3 py-1 text-sm"
+												>
+													{genre.name}
+												</span>
+											)
+										})}
 									</div>
 								</div>
 							)}
 							<div>
 								<h2 className="mb-2 font-semibold text-xl">Elenco Principal</h2>
 								{movieWithCredits.credits &&
-									movieWithCredits.credits.cast.slice(0, 5).map(castMember => (
-										<div key={castMember.id} className="flex items-center gap-2 mb-2">
-											{castMember.profile_path ? (
-												<img
-													src={`https://image.tmdb.org/t/p/w500${castMember.profile_path}`}
-													alt={castMember.name}
-													className="w-10 h-10 rounded-full"
-												/>
-											) : (
-												<UserCircleIcon className="w-10 h-10 rounded-full text-gray-400" />
-											)}
-											<div>
-												<p className="font-semibold">{castMember.name}</p>
-												<p className="text-gray-400">{castMember.character}</p>
+									movieWithCredits.credits.cast.slice(0, 5).map(castMember => {
+										return (
+											<div key={castMember.id} className="flex items-center gap-2 mb-2">
+												{castMember.profile_path ? (
+													<img
+														src={`https://image.tmdb.org/t/p/w500${castMember.profile_path}`}
+														alt={castMember.name}
+														className="w-10 h-10 rounded-full"
+													/>
+												) : (
+													<UserCircleIcon className="w-10 h-10 rounded-full text-gray-400" />
+												)}
+												<div>
+													<p className="font-semibold">{castMember.name}</p>
+													<p className="text-gray-400">{castMember.character}</p>
+												</div>
 											</div>
-										</div>
-									))}
+										)
+									})}
 							</div>
 							{movieWithCredits.credits && (
 								<div>
 									<h2 className="mb-2 font-semibold text-xl">Direção</h2>
 									{movieWithCredits.credits.crew
 										.filter(member => member.known_for_department.includes('Directing'))
+										.filter(
+											(member, index, self) =>
+												self.findIndex(m => m.id === member.id) === index
+										)
 										.slice(0, 5)
-										.map(director => (
-											<div key={director.id} className="flex items-center gap-2 mb-2">
-												{director.profile_path && (
-													<img
-														src={`https://image.tmdb.org/t/p/w500${director.profile_path}`}
-														alt={director.name}
-														className="h-10 w-10 rounded-full"
-													/>
-												)}
-												{!director.profile_path && (
-													<UserCircleIcon className="h-10 w-10 rounded-full text-gray-400" />
-												)}
-												<div>
-													<p className="font-semibold">{director.name}</p>
-													<p className="text-gray-400">{director.known_for_department}</p>
+										.map(director => {
+											return (
+												<div key={director.id} className="flex items-center gap-2 mb-2">
+													{director.profile_path && (
+														<img
+															src={`https://image.tmdb.org/t/p/w500${director.profile_path}`}
+															alt={director.name}
+															className="h-10 w-10 rounded-full"
+														/>
+													)}
+													{!director.profile_path && (
+														<UserCircleIcon className="h-10 w-10 rounded-full text-gray-400" />
+													)}
+													<div>
+														<p className="font-semibold">{director.name}</p>
+														<p className="text-gray-400">{director.known_for_department}</p>
+													</div>
 												</div>
-											</div>
-										))}
+											)
+										})}
 								</div>
-							)}{' '}
+							)}
 						</div>
 					</div>
 				</div>

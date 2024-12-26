@@ -5,7 +5,6 @@ import { redirect } from 'next/navigation'
 import { RegisterFormData } from '../@types/zod'
 
 export async function registerAction(data: RegisterFormData) {
-	console.log(data)
 	const user = await prisma.user.findUnique({
 		where: {
 			username: data.username,

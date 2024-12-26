@@ -14,6 +14,9 @@ import { PlusSignSquareIcon } from '@/components/houstonicons/plus'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { UserCircleIcon } from '@/components/houstonicons/user'
 import ptBR from 'dayjs/locale/pt-br'
+import { adddMediaToWatchlistAction } from '@/app/actions/add-to-watchlist'
+import { adddMediaToWatchedAction } from '@/app/actions/add-to-watched'
+import { toast } from 'sonner'
 
 dayjs.locale(ptBR)
 
@@ -34,6 +37,46 @@ export function MediaDetailsPage({ serie, user }: MediaDetailsPageProps) {
 		isInWatchedlist = user.watched.some(
 			media => media.imdbId === serie.id.toString()
 		)
+	}
+
+	async function handleAdddMediaToWatchlist() {
+		if (!user) {
+			router.push('/login')
+			return
+		}
+
+		const result = await adddMediaToWatchlistAction(
+			'SERIES',
+			String(serie.id),
+			serie.id,
+			user.username
+		)
+
+		if (!result.success) {
+			toast.error('Erro ao adicionar na lista de assistir')
+		} else {
+			toast.success('Adicionado na lista de assistir')
+		}
+	}
+
+	async function handleAdddMediaToWatchedAction() {
+		if (!user) {
+			router.push('/login')
+			return
+		}
+
+		const result = await adddMediaToWatchedAction(
+			'SERIES',
+			String(serie.id),
+			serie.id,
+			user.username
+		)
+
+		if (!result.success) {
+			toast.error('Erro ao adicionar na lista de assistidos')
+		} else {
+			toast.success('Adicionado na lista de assistidos')
+		}
 	}
 
 	return (

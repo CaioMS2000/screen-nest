@@ -55,7 +55,11 @@ export default function MediaBox({
 				<div className="mt-1 flex items-center gap-2 text-gray-400 text-sm">
 					<span>{type === 'movie' ? 'Filme' : 'Série'}</span>
 					<span>•</span>
-					<span>{dayjs(release_date).get('y')}</span>
+					<span>
+						{Number.isNaN(dayjs(release_date).get('y'))
+							? '?'
+							: dayjs(release_date).get('y')}
+					</span>{' '}
 				</div>
 			</div>
 		</div>

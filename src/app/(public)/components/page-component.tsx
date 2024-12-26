@@ -62,7 +62,7 @@ export default function PageComponent({
 								<Spacer className="h-1 w-full max-w-36 bg-app-red" />
 							</h4>
 							<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-								{popularMovies.map((movie: NotDetailedMovie) => {
+								{popularMovies.map(movie => {
 									return (
 										<MediaBox
 											key={`movie-${movie.id}`}
@@ -84,7 +84,7 @@ export default function PageComponent({
 								<Spacer className="h-1 w-full max-w-36 bg-app-red" />
 							</h4>
 							<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-								{popularTVShows.map((serie: NotDetailedTVShow) => {
+								{popularTVShows.map(serie => {
 									return (
 										<MediaBox
 											key={`serie-${serie.id}`}

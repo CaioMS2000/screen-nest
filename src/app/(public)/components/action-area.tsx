@@ -15,11 +15,9 @@ export default function ActionArea({ usernameFromCookies }: ActionAreaProps) {
 	const router = useRouter()
 	const username = usernameFromCookies
 
-	console.log(username)
-
 	async function handleLogout() {
 		const result = await logoutAction()
-		console.log(result)
+
 		if (!result.success && result.message) {
 			toast.error(result.message)
 		}

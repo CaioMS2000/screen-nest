@@ -28,20 +28,6 @@ export default function SearchingComponent({ query }: SearchingComponentProps) {
 			enabled: query.length > 0,
 		})
 
-	useEffect(() => {
-		if (moviesIsFetched) {
-			// console.log(moviesData)
-			// console.log(moviesData?.movies[0])
-		}
-	}, [moviesData, moviesIsFetched])
-
-	useEffect(() => {
-		if (seriesIsFetched) {
-			// console.log(seriesData)
-			// console.log(seriesData?.series[0])
-		}
-	}, [seriesData, seriesIsFetched])
-
 	return (
 		<>
 			<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

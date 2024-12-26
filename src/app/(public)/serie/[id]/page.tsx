@@ -22,7 +22,6 @@ export default async function SeriePage({ params }: PageParams) {
 	const show: TVShow = await response.json()
 	const username = await CookieManager.getCookie(COOKIE_USERNAME)
 	const user = await getUserAction(username?.value)
-	console.log(show)
 
 	return (
 		<>
