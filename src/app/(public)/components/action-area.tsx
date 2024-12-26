@@ -30,6 +30,12 @@ export default function ActionArea({ usernameFromCookies }: ActionAreaProps) {
 					<UserSquareIcon className="size-10" />
 					{username}
 				</span>
+				<Button
+					className="mx-4 bg-app-red font-semibold text-white"
+					onPress={() => router.push('/media-list')}
+				>
+					Lista
+				</Button>
 				<Button isIconOnly onPress={handleLogout}>
 					<TransitionLeftIcon className="size-5 text-app-red" color="" />
 				</Button>

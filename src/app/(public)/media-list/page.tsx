@@ -1,16 +1,15 @@
 import { COOKIE_USERNAME } from '@/constants/http'
-import { cookies } from 'next/headers'
 import Header from '../components/header'
-import { MediaList } from './component'
+import { MediaList } from './components'
+import CookieManager from '@/utils/cookie-manager'
 
 export default async function MediaListPage() {
-	const cookieStore = await cookies()
-	const username = cookieStore.get(COOKIE_USERNAME)
+	const username = await CookieManager.getCookie(COOKIE_USERNAME)
 
 	return (
 		<>
 			<Header usernameFromCookies={username?.value} />
-			<MediaList />
+			<MediaList username={username?.value} />
 		</>
 	)
 }
