@@ -4,10 +4,8 @@ import { cookies } from 'next/headers'
 import { prisma } from '@/lib/prisma'
 import { LoginFormData } from '../@types/zod'
 import { compare } from 'bcryptjs'
-import { redirect } from 'next/navigation'
 
 export async function loginAction(data: LoginFormData) {
-	console.log(data)
 	const user = await prisma.user.findUnique({
 		where: {
 			username: data.username,
@@ -29,5 +27,5 @@ export async function loginAction(data: LoginFormData) {
 	cookieStore.set(COOKIE_USER_NAME, user.name)
 	cookieStore.set(COOKIE_USERNAME, data.username)
 
-	redirect('/')
+	return { success: true }
 }

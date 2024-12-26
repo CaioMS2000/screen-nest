@@ -8,14 +8,15 @@ import { UserCircleIcon } from '@/components/houstonicons/user'
 import ImageComponent from '@/components/image-component'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, Input } from '@nextui-org/react'
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 export default function PageComponent() {
 	const [isVisible, setIsVisible] = useState(false)
 	const params = useSearchParams()
+	const router = useRouter()
 	const toggleVisibility = () => setIsVisible(!isVisible)
 	const {
 		handleSubmit,
@@ -33,6 +34,10 @@ export default function PageComponent() {
 	const handleLogin = async (data: LoginFormData) => {
 		const result = await loginAction(data)
 
+		if (!result) {
+			toast.error('Erro ao realizar o login')
+			return
+		}
 		if (!result.success && result.message) {
 			toast.error(result.message)
 			return
@@ -40,6 +45,7 @@ export default function PageComponent() {
 		if (result.success) {
 			toast.success('Login realizado com sucesso')
 			reset()
+			router.push('/')
 		}
 	}
 
