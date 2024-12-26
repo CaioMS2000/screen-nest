@@ -13,6 +13,9 @@ import { User } from '@/app/@types/entities/user'
 import { PlusSignSquareIcon } from '@/components/houstonicons/plus'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { UserCircleIcon } from '@/components/houstonicons/user'
+import ptBR from 'dayjs/locale/pt-br'
+
+dayjs.locale(ptBR)
 
 interface MediaDetailsPageProps {
 	movie: Movie
@@ -151,7 +154,7 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 								</div>
 							)}
 							<div>
-								<h2 className="text-xl font-semibold mb-2">Elenco Principal</h2>
+								<h2 className="mb-2 font-semibold text-xl">Elenco Principal</h2>
 								{movieWithCredits.credits &&
 									movieWithCredits.credits.cast.slice(0, 5).map(castMember => (
 										<div key={castMember.id} className="flex items-center gap-2 mb-2">
@@ -173,7 +176,7 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 							</div>
 							{movieWithCredits.credits && (
 								<div>
-									<h2 className="text-xl font-semibold mb-2">Direção</h2>
+									<h2 className="mb-2 font-semibold text-xl">Direção</h2>
 									{movieWithCredits.credits.crew
 										.filter(member => member.known_for_department.includes('Directing'))
 										.slice(0, 5)
@@ -183,11 +186,11 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 													<img
 														src={`https://image.tmdb.org/t/p/w500${director.profile_path}`}
 														alt={director.name}
-														className="w-10 h-10 rounded-full"
+														className="h-10 w-10 rounded-full"
 													/>
 												)}
 												{!director.profile_path && (
-													<UserCircleIcon className="w-10 h-10 rounded-full text-gray-400" />
+													<UserCircleIcon className="h-10 w-10 rounded-full text-gray-400" />
 												)}
 												<div>
 													<p className="font-semibold">{director.name}</p>

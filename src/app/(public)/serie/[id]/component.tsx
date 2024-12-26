@@ -13,6 +13,9 @@ import { User } from '@/app/@types/entities/user'
 import { PlusSignSquareIcon } from '@/components/houstonicons/plus'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { UserCircleIcon } from '@/components/houstonicons/user'
+import ptBR from 'dayjs/locale/pt-br'
+
+dayjs.locale(ptBR)
 
 interface MediaDetailsPageProps {
 	serie: TVShow
@@ -156,18 +159,18 @@ export function MediaDetailsPage({ serie, user }: MediaDetailsPageProps) {
 
 							{serie.created_by && (
 								<div>
-									<h2 className="text-xl font-semibold mb-2">Criação</h2>
+									<h2 className="mb-2 font-semibold text-xl">Criação</h2>
 									{serie.created_by.slice(0, 5).map(creator => (
 										<div key={creator.id} className="flex items-center gap-2 mb-2">
 											{creator.profile_path && (
 												<img
 													src={`https://image.tmdb.org/t/p/w500${creator.profile_path}`}
 													alt={creator.name}
-													className="w-10 h-10 rounded-full"
+													className="h-10 w-10 rounded-full"
 												/>
 											)}
 											{!creator.profile_path && (
-												<UserCircleIcon className="w-10 h-10 rounded-full text-gray-400" />
+												<UserCircleIcon className="h-10 w-10 rounded-full text-gray-400" />
 											)}
 											<div>
 												<p className="font-semibold">{creator.name}</p>

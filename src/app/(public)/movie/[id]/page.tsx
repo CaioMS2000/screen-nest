@@ -1,14 +1,9 @@
 import { Movie } from '@/app/@types/tmbd'
 import { get } from '@/utils/tmdb'
-import dayjs from 'dayjs'
-import ptBR from 'dayjs/locale/pt-br'
 import { MediaDetailsPage } from './component'
-// import { CookieManager } from '@/utils/cookie-manager'
 import { COOKIE_USERNAME } from '@/constants/http'
 import CookieManager from '@/utils/cookie-manager'
 import { getUserAction } from '@/app/actions/get-user'
-
-dayjs.locale(ptBR)
 
 interface PageParams {
 	params: Promise<{ id: string }>
