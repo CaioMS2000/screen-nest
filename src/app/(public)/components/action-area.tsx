@@ -32,7 +32,9 @@ export default function ActionArea({ usernameFromCookies }: ActionAreaProps) {
 					{username}
 				</span>
 				<Button
-					className="mx-4 bg-app-red font-semibold text-white"
+					variant="bordered"
+					color="danger"
+					className="mx-4 font-semibold"
 					onPress={() => router.push('/media-list')}
 				>
 					Lista

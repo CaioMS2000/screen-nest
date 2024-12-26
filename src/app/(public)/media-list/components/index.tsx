@@ -56,8 +56,8 @@ export function MediaList({ username }: MediaListProps) {
 					</span>
 				</Button>
 				<Button
-					className={cn('inline-flex items-center gap-2 bg-green-700', {
-						'bg-green-700/40': list !== List.WATCHED,
+					className={cn('inline-flex items-center gap-2 bg-yellow-700', {
+						'bg-yellow-700/40': list !== List.WATCHED,
 					})}
 					size="lg"
 					onPress={() => setList(List.WATCHED)}
