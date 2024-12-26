@@ -17,13 +17,13 @@ export async function getUserAction(
 		},
 	})
 	const watched = user.watched.map(media => ({
-		id: media.type,
-		imdbId: media.type,
+		id: media.id,
+		imdbId: media.imdbId,
 		type: media.type,
 	}))
 	const watchList = user.watchList.map(media => ({
-		id: media.type,
-		imdbId: media.type,
+		id: media.id,
+		imdbId: media.imdbId,
 		type: media.type,
 	}))
 
