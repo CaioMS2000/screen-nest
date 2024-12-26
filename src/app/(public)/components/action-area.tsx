@@ -20,6 +20,7 @@ export default function ActionArea({ usernameFromCookies }: ActionAreaProps) {
 
 		if (!result.success && result.message) {
 			toast.error(result.message)
+			router.push('/')
 		}
 	}
 
