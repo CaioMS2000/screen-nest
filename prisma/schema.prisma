@@ -34,7 +34,7 @@ model Media {
   watchedUserId String? @map("watched_user_id")
 
   @@map("medias")
-  @@unique([imdbId, interestedUserId, watchedUserId])
+  // @@unique([imdbId, interestedUserId, watchedUserId])
 }
 
 enum MediaType {
