@@ -1,10 +1,10 @@
 'use client'
-import { useRouter } from 'next/navigation'
-import dayjs from 'dayjs'
-import ImageComponent from '@/components/image-component'
-import { StarIcon } from '@/components/houstonicons/star'
-import { Button, User } from '@nextui-org/react'
 import { MinusSignSquareIcon } from '@/components/houstonicons/minus'
+import { StarIcon } from '@/components/houstonicons/star'
+import ImageComponent from '@/components/image-component'
+import { Button, User } from '@nextui-org/react'
+import dayjs from 'dayjs'
+import { useRouter } from 'next/navigation'
 
 interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	title: string
@@ -61,7 +61,7 @@ export default function MediaManageBox({
 						{Number.isNaN(dayjs(release_date).get('y'))
 							? '?'
 							: dayjs(release_date).get('y')}
-					</span>{' '}
+					</span>
 				</div>
 			</div>
 			<div

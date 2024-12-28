@@ -1,9 +1,9 @@
 'use client'
 import { cn } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
-import ImageComponent from './image-component'
-import { StarIcon } from './houstonicons/star'
 import dayjs from 'dayjs'
+import { useRouter } from 'next/navigation'
+import { StarIcon } from './houstonicons/star'
+import ImageComponent from './image-component'
 
 interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	title: string
@@ -60,7 +60,7 @@ export default function MediaBox({
 						{Number.isNaN(dayjs(release_date).get('y'))
 							? '?'
 							: dayjs(release_date).get('y')}
-					</span>{' '}
+					</span>
 				</div>
 			</div>
 		</div>

@@ -15,8 +15,22 @@ import { convertMinutesToHours } from '@/utils'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 import { useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { toast } from 'sonner'
+import {
+	Modal,
+	ModalContent,
+	ModalHeader,
+	ModalBody,
+	ModalFooter,
+	useDisclosure,
+} from '@nextui-org/modal'
+import { Button } from '@nextui-org/react'
+import { useForm } from 'react-hook-form'
+import { sponsorSchema } from '@/app/@types/zod/schemas'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { SponsorFormData } from '@/app/@types/zod'
+import { sponsorAction } from '@/app/actions/sponsor'
 
 dayjs.locale(ptBR)
 
@@ -26,9 +40,25 @@ interface MediaDetailsPageProps {
 }
 
 export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
+	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 	const movieWithCredits = movie as unknown as Movie & {
 		credits: MovieCredits
 	}
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<SponsorFormData>({
+		resolver: zodResolver(sponsorSchema),
+		defaultValues: {
+			date: dayjs().format('YYYY-MM-DD'),
+			mediaId: movie.id,
+			imdbId: movie.imdb_id,
+			name: '',
+			price: '',
+			mediaType: 'MOVIE',
+		},
+	})
 	const router = useRouter()
 	let isInWatchlist = false
 	let isInWatchedlist = false
@@ -38,24 +68,27 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 		isInWatchedlist = user.watched.some(media => media.imdbId === movie.imdb_id)
 	}
 
-	async function handleAdddMediaToWatchlist() {
+	async function handleAdddMediaToWatchlist(data: SponsorFormData) {
 		if (!user) {
 			router.push('/login')
 			return
 		}
 
-		const result = await adddMediaToWatchlistAction(
-			'MOVIE',
-			movie.imdb_id,
-			movie.id,
-			user.username
-		)
+		await sponsorAction(data, user.username)
 
-		if (!result.success) {
-			toast.error('Erro ao adicionar na lista de assistir')
-		} else {
-			toast.success('Adicionado na lista de assistir')
-		}
+		// const result = await adddMediaToWatchlistAction(
+		// 	'MOVIE',
+		// 	movie.imdb_id,
+		// 	movie.id,
+		// 	user.username
+		// )
+
+		// if (!result.success) {
+		// 	toast.error('Erro ao adicionar na lista de assistir')
+		// } else {
+		// 	onClose()
+		// 	toast.success('Adicionado na lista de assistir')
+		// }
 	}
 
 	async function handleAdddMediaToWatchedAction() {
@@ -77,6 +110,10 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 			toast.success('Adicionado na lista de assistidos')
 		}
 	}
+
+	useEffect(() => {
+		console.log(errors)
+	}, [errors])
 
 	return (
 		<div className="min-h-screen bg-[#121212] pb-12">
@@ -146,15 +183,73 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 							</button>
 						)}
 						{user && !isInWatchlist && (
-							<button
-								className={
-									'mb-8 flex items-center gap-2 rounded-lg bg-red-500 px-6 py-3 transition-colors hover:bg-red-600'
-								}
-								onClick={handleAdddMediaToWatchlist}
-							>
-								<Clock01Icon className="size-5 text-white" />
-								<span>Adicionar à lista</span>
-							</button>
+							<>
+								{/* <button
+							 	className={
+							 		'mb-8 flex items-center gap-2 rounded-lg bg-red-500 px-6 py-3 transition-colors hover:bg-red-600'
+							 	}
+							 	onClick={handleAdddMediaToWatchlist}
+							 >
+							 	<Clock01Icon className="size-5 text-white" />
+							 	<span>Adicionar à lista</span>
+							 </button> */}
+								<button
+									className={
+										'mb-8 flex items-center gap-2 rounded-lg bg-red-500 px-6 py-3 transition-colors hover:bg-red-600'
+									}
+									onClick={onOpen}
+								>
+									<Clock01Icon className="size-5 text-white" />
+									<span>Adicionar à lista</span>
+								</button>
+								<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+									<ModalContent>
+										{onClose => (
+											<>
+												<ModalHeader className="flex flex-col gap-1">
+													Reservar o filme
+												</ModalHeader>
+												<ModalBody>
+													<form
+														onSubmit={handleSubmit(handleAdddMediaToWatchlist)}
+														id="watchlist-form"
+														className="flex flex-col gap-4"
+													>
+														<label htmlFor="name" className="">
+															Quem patrocinou?
+														</label>
+														<input
+															type="text"
+															id="name"
+															{...register('name')}
+															className="rounded border p-2 placeholder:text-zinc-500/50"
+															placeholder="ex: AdemiroUchihaDeathnoteSuperSayajin123😎😎"
+														/>
+														<label htmlFor="price" className="">
+															Preço
+														</label>
+														<input
+															type="number"
+															id="price"
+															{...register('price')}
+															className="rounded border p-2"
+															placeholder="0,00"
+														/>
+													</form>
+												</ModalBody>
+												<ModalFooter>
+													<Button color="danger" variant="light" onPress={onClose}>
+														Cancelar
+													</Button>
+													<Button color="primary" type="submit" form="watchlist-form">
+														Reservar
+													</Button>
+												</ModalFooter>
+											</>
+										)}
+									</ModalContent>
+								</Modal>
+							</>
 						)}
 						{user && !isInWatchedlist && (
 							<button

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { MediaType } from '@/app/@types'
 
 export const loginFormSchema = z.object({
 	username: z
@@ -20,4 +21,13 @@ export const registerFormSchema = z.object({
 			'O nome de usuário não pode conter espaço em branco e não pode começar com número.'
 		),
 	password: z.string().min(8, 'A senha deve ter pelo menos 8 caracteres.'),
+})
+
+export const sponsorSchema = z.object({
+	name: z.string(),
+	mediaId: z.number(),
+	mediaType: z.custom<MediaType>(),
+	imdbId: z.string(),
+	price: z.string().regex(/^\d+(\.\d{2})?$/, 'Formato inválido'), // Ex: '10.50'
+	date: z.string().date(),
 })
