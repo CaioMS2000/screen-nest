@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Providers from './providers'
+import { Header } from '@/components/header'
 
 export const metadata: Metadata = {
 	title: 'Screen Nest',
@@ -19,7 +20,10 @@ export default function RootLayout({
 			className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows"
 		>
 			<body className={'dark h-screen bg-app-black-500 antialiased'}>
-				<Providers>{children}</Providers>
+				<Providers>
+					<Header />
+					{children}
+				</Providers>
 			</body>
 		</html>
 	)

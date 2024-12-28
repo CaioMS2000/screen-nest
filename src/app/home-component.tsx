@@ -8,7 +8,6 @@ export function Component() {
 	return (
 		<>
 			<div>Home</div>
-			<div>{JSON.stringify(cookies)}</div>
 		</>
 	)
 }
