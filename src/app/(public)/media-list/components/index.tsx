@@ -6,7 +6,7 @@ import { Clock01Icon } from '@/components/houstonicons/clock'
 import { cn } from '@/lib/utils'
 import { Button } from '@nextui-org/react'
 import { useQuery } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { WatchList } from './watch-list'
 import { WatchedList } from './watched-list'
 
@@ -31,6 +31,10 @@ export function MediaList({ username }: MediaListProps) {
 		enabled: !!username && list === List.WATCHED,
 		queryKey: ['watchedlist', username],
 	})
+
+	useEffect(() => {
+		console.log(watchedListData)
+	}, [watchedListData])
 
 	return (
 		<>

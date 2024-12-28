@@ -1,9 +1,10 @@
 import { Media } from '@/app/@types/entities/media'
 import { fetchMovieAction } from '@/app/actions/fetch-movie'
+import { fetchSerieAction } from '@/app/actions/fetch-serie'
 import { useQuery } from '@tanstack/react-query'
-import MediaManageBox from './media-manage-box'
 import dayjs from 'dayjs'
 import { useEffect } from 'react'
+import MediaManageBox from './media-manage-box'
 
 interface ListItemProps {
 	media: Media
@@ -11,10 +12,17 @@ interface ListItemProps {
 }
 export function ListItem({ media, list }: ListItemProps) {
 	const { data, isFetching } = useQuery({
-		queryFn: () => fetchMovieAction(media.imdbId),
+		queryFn: () => {
+			if (media.type === 'MOVIE') {
+				return fetchMovieAction(media.imdbId)
+			}
+			return fetchSerieAction(media.imdbId)
+		},
 		queryKey: [media.type, media.imdbId],
 	})
-
+	useEffect(() => {
+		console.log(data)
+	}, [data])
 	return (
 		<>
 			{data && data.sponsor && (

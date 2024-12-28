@@ -151,6 +151,7 @@ export function MediaDetailsPage({ serie, user }: MediaDetailsPageProps) {
 								className={
 									'mb-8 flex items-center gap-2 rounded-lg bg-red-500 px-6 py-3 transition-colors hover:bg-red-600'
 								}
+								onClick={handleAdddMediaToWatchlist}
 							>
 								<Clock01Icon className="size-5 text-white" />
 								<span>Adicionar à lista</span>
@@ -161,6 +162,7 @@ export function MediaDetailsPage({ serie, user }: MediaDetailsPageProps) {
 								className={
 									'mb-8 flex items-center gap-2 rounded-lg bg-pink-500 px-6 py-3 transition-colors hover:bg-pink-600'
 								}
+								onClick={handleAdddMediaToWatchedAction}
 							>
 								<PlusSignSquareIcon className="size-5 text-white" />
 								<span>Marcar como assistido</span>
