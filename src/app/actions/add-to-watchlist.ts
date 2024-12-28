@@ -38,8 +38,6 @@ export async function adddMediaToWatchlistAction(
 			},
 		})
 
-		console.log(userUpdated)
-
 		revalidatePath(`/movie/${id}`)
 
 		return {

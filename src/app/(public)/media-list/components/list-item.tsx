@@ -14,11 +14,6 @@ export function ListItem({ media }: ListItemProps) {
 		queryKey: [media.type, media.imdbId],
 	})
 
-	console.log([media.type, media.imdbId])
-	useEffect(() => {
-		console.log(data)
-	}, [data])
-
 	return (
 		<>
 			{data && data.sponsor && (

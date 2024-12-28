@@ -53,8 +53,8 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 			date: dayjs().format('YYYY-MM-DD'),
 			mediaId: movie.id,
 			imdbId: movie.imdb_id,
-			name: '',
-			price: '',
+			name: 'caio',
+			price: '1',
 			mediaType: 'MOVIE',
 		},
 	})

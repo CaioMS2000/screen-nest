@@ -25,7 +25,5 @@ export async function fetchMovieAction(id: string) {
 		},
 	})
 
-	console.log(sponsor)
-
 	return { movie: data, sponsor }
 }

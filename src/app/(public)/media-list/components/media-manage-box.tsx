@@ -3,6 +3,7 @@ import { removeFromWatchlistAction } from '@/app/actions/remove-from-watchlist'
 import { MinusSignSquareIcon } from '@/components/houstonicons/minus'
 import { StarIcon } from '@/components/houstonicons/star'
 import ImageComponent from '@/components/image-component'
+import { queryClient } from '@/lib/react-query'
 import { Button, User } from '@nextui-org/react'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/navigation'
@@ -106,8 +107,6 @@ export default function MediaManageBox({
 					startContent={<MinusSignSquareIcon className="size-5 text-danger" />}
 					variant="bordered"
 					onPress={e => {
-						console.log(e)
-						console.log('remover')
 						handleRemove()
 					}}
 				>

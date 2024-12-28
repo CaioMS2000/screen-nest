@@ -32,9 +32,11 @@ export async function removeFromWatchlistAction(imdbId: string) {
 		})
 
 		revalidatePath('/media-list')
-		console.log('invalidating', ['MOVIE', imdbId])
 		queryClient.invalidateQueries({
 			queryKey: ['MOVIE', imdbId],
+		})
+		queryClient.invalidateQueries({
+			queryKey: ['watchlist', username?.value],
 		})
 
 		return {
