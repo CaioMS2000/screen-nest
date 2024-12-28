@@ -7,8 +7,9 @@ import { useEffect } from 'react'
 
 interface ListItemProps {
 	media: Media
+	list: 'watchlist' | 'watched'
 }
-export function ListItem({ media }: ListItemProps) {
+export function ListItem({ media, list }: ListItemProps) {
 	const { data, isFetching } = useQuery({
 		queryFn: () => fetchMovieAction(media.imdbId),
 		queryKey: [media.type, media.imdbId],
@@ -32,6 +33,7 @@ export function ListItem({ media }: ListItemProps) {
 						currency: 'BRL',
 					})}
 					sponsor={data.sponsor.who}
+					list={list}
 				/>
 			)}
 		</>

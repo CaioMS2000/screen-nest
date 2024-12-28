@@ -15,9 +15,6 @@ export async function adddMediaToWatchedAction(
 			where: {
 				username,
 			},
-			include: {
-				watchList: true,
-			},
 		})
 
 		if (!user) {
@@ -38,7 +35,11 @@ export async function adddMediaToWatchedAction(
 			},
 		})
 
-		revalidatePath(`/movie/${id}`)
+		if (mediaType === 'MOVIE') {
+			revalidatePath(`/movie/${id}`)
+		} else {
+			revalidatePath(`/serie/${id}`)
+		}
 
 		return {
 			success: true,

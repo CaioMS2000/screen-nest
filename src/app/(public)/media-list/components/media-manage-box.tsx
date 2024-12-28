@@ -1,4 +1,5 @@
 'use client'
+import { removeFromWatchedListAction } from '@/app/actions/remove-from-watchedList'
 import { removeFromWatchlistAction } from '@/app/actions/remove-from-watchlist'
 import { MinusSignSquareIcon } from '@/components/houstonicons/minus'
 import { StarIcon } from '@/components/houstonicons/star'
@@ -20,6 +21,7 @@ interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	sponsor: string
 	vote_average: number
 	type: 'movie' | 'serie'
+	list: 'watchlist' | 'watched'
 }
 
 export default function MediaManageBox({
@@ -34,6 +36,7 @@ export default function MediaManageBox({
 	sponsorPrice,
 	sponsor,
 	imdbId,
+	list,
 	...props
 }: MediaBoxProps) {
 	const router = useRouter()
@@ -43,13 +46,24 @@ export default function MediaManageBox({
 	}
 
 	async function handleRemove() {
-		const response = await removeFromWatchlistAction(imdbId)
+		if (list === 'watchlist') {
+			const response = await removeFromWatchlistAction(imdbId)
 
-		if (response.success) {
-			location.reload()
-			toast.success('Removido da lista de observação com sucesso!')
+			if (response.success) {
+				location.reload()
+				toast.success('Removido da lista de observação com sucesso!')
+			} else {
+				toast.error('Falha ao remover da lista de observação.')
+			}
 		} else {
-			toast.error('Falha ao remover da lista de observação.')
+			const response = await removeFromWatchedListAction(imdbId)
+
+			if (response.success) {
+				location.reload()
+				toast.success('Removido da lista de observação com sucesso!')
+			} else {
+				toast.error('Falha ao remover da lista de observação.')
+			}
 		}
 	}
 
