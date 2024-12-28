@@ -23,25 +23,4 @@ export class CookieManager {
 	}
 }
 
-class ICookieManager {
-	cookieStore: ReturnType<typeof cookies>
-
-	constructor() {
-		this.cookieStore = cookies()
-	}
-
-	async getCookie(name: string) {
-		const cookieStore = await this.cookieStore
-		return cookieStore.get(name)
-	}
-
-	async setCookie(name: string, value: string, options = {}) {
-		const cookieStore = await this.cookieStore
-
-		cookieStore.set(name, value, options)
-	}
-}
-
-class Manager {}
-
 export default CookieManager

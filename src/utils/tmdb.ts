@@ -9,13 +9,7 @@ export type FetchOptions = {
 		Authorization: string
 	}
 } & RequestInit
-// interface FetchOptions extends RequestInit {
-// 	method?: string
-// 	headers?: {
-// 		accept: string
-// 		Authorization: string
-// 	}
-// }
+
 const defaultOptions: FetchOptions = {
 	method: 'GET',
 	headers: {
