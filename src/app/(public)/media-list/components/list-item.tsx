@@ -14,6 +14,7 @@ export function ListItem({ media }: ListItemProps) {
 		queryKey: [media.type, media.imdbId],
 	})
 
+	console.log([media.type, media.imdbId])
 	useEffect(() => {
 		console.log(data)
 	}, [data])
@@ -27,6 +28,7 @@ export function ListItem({ media }: ListItemProps) {
 					imgUrl={data.movie.poster_path}
 					type={media.type === 'MOVIE' ? 'movie' : 'serie'}
 					mediaId={data.movie.id}
+					imdbId={data.movie.imdb_id}
 					release_date={data.movie.release_date}
 					vote_average={data.movie.vote_average}
 					sponsorDate={dayjs(data.sponsor.date).format('DD/MM/YYYY')}

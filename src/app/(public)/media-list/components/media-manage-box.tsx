@@ -1,15 +1,18 @@
 'use client'
+import { removeFromWatchlistAction } from '@/app/actions/remove-from-watchlist'
 import { MinusSignSquareIcon } from '@/components/houstonicons/minus'
 import { StarIcon } from '@/components/houstonicons/star'
 import ImageComponent from '@/components/image-component'
 import { Button, User } from '@nextui-org/react'
 import dayjs from 'dayjs'
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner'
 
 interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	title: string
 	imgUrl: string
 	mediaId: number
+	imdbId: string
 	release_date: string
 	sponsorDate: string
 	sponsorPrice: string
@@ -29,12 +32,24 @@ export default function MediaManageBox({
 	sponsorDate,
 	sponsorPrice,
 	sponsor,
+	imdbId,
 	...props
 }: MediaBoxProps) {
 	const router = useRouter()
 
 	const handleClick = () => {
 		router.push(`/${type}/${mediaId}`)
+	}
+
+	async function handleRemove() {
+		const response = await removeFromWatchlistAction(imdbId)
+
+		if (response.success) {
+			location.reload()
+			toast.success('Removido da lista de observação com sucesso!')
+		} else {
+			toast.error('Falha ao remover da lista de observação.')
+		}
 	}
 
 	return (
@@ -93,6 +108,7 @@ export default function MediaManageBox({
 					onPress={e => {
 						console.log(e)
 						console.log('remover')
+						handleRemove()
 					}}
 				>
 					<span className="font-bold">Remover</span>
