@@ -1,12 +1,11 @@
 'use server'
-
-import { COOKIE_USERNAME } from '@/constants/http'
 import { cookies } from 'next/headers'
 
 const getCookie = async () => {
 	const cookieStore = await cookies()
+	const data = cookieStore.getAll()
 
-	return cookieStore.get(COOKIE_USERNAME)?.value
+	return data
 }
 
 export default getCookie

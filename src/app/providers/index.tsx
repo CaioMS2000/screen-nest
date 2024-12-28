@@ -8,7 +8,7 @@ export default async function Providers({
 	const cookie = await getCookie()
 	return (
 		<>
-			<CookieProvider cookie={cookie}>
+			<CookieProvider cookies={cookie}>
 				<ClientSideProviders>{children}</ClientSideProviders>
 			</CookieProvider>
 		</>

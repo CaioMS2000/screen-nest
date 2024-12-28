@@ -1,9 +1,9 @@
 'use client'
-
+import { CookieType } from '@/app/@types/http'
 import { createContext, PropsWithChildren, useContext, useMemo } from 'react'
 
 interface CookieContextType {
-	cookie: string
+	cookies: CookieType
 }
 
 export const CookieContext = createContext<CookieContextType | null>(null)
@@ -18,15 +18,15 @@ export const useCookies = (): CookieContextType => {
 
 export const CookieProvider = ({
 	children,
-	cookie,
+	cookies,
 }: PropsWithChildren<{
-	cookie: string | undefined
+	cookies: CookieType
 }>) => {
 	const providerValue = useMemo(
 		() => ({
-			cookie: cookie,
+			cookies: cookies,
 		}),
-		[cookie]
+		[cookies]
 	)
 
 	return (

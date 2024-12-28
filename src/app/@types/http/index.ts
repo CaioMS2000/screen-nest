@@ -1,4 +1,5 @@
 import { NotDetailedMovie, NotDetailedTVShow } from '../tmbd'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
 export interface FetchMoviesResponse {
 	page: number
@@ -13,3 +14,5 @@ export interface FetchSeriesResponse {
 	totalResults: number
 	series: NotDetailedTVShow[]
 }
+
+export type CookieType = RequestCookie[]

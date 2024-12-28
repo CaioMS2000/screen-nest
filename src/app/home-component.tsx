@@ -3,11 +3,12 @@
 import { useCookies } from '@/hooks/cookies'
 
 export function Component() {
-	const { cookie } = useCookies()
+	const { cookies } = useCookies()
+	console.log(cookies.find(cookie => cookie.name === 'test'))
 	return (
 		<>
 			<div>Home</div>
-			<div>{cookie}</div>
+			<div>{JSON.stringify(cookies)}</div>
 		</>
 	)
 }
