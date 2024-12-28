@@ -1,7 +1,7 @@
 import { Media } from '@/app/@types/entities/media'
 import { fetchMovieAction } from '@/app/actions/fetch-movie'
-import MediaBox from '@/components/media-box'
 import { useQuery } from '@tanstack/react-query'
+import MediaManageBox from './media-manage-box'
 
 interface ListItemProps {
 	media: Media
@@ -15,7 +15,7 @@ export function ListItem({ media }: ListItemProps) {
 	return (
 		<>
 			{data && (
-				<MediaBox
+				<MediaManageBox
 					key={`${media.type}-${data.id}`}
 					title={data.title}
 					imgUrl={data.poster_path}

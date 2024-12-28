@@ -1,9 +1,10 @@
 'use client'
-import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import ImageComponent from './image-component'
-import { StarIcon } from './houstonicons/star'
 import dayjs from 'dayjs'
+import ImageComponent from '@/components/image-component'
+import { StarIcon } from '@/components/houstonicons/star'
+import { Button, User } from '@nextui-org/react'
+import { MinusSignSquareIcon } from '@/components/houstonicons/minus'
 
 interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	title: string
@@ -14,7 +15,7 @@ interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	type: 'movie' | 'serie'
 }
 
-export default function MediaBox({
+export default function MediaManageBox({
 	title,
 	imgUrl,
 	className,
@@ -33,19 +34,19 @@ export default function MediaBox({
 		// biome-ignore lint/a11y/useKeyWithClickEvents:
 		<div
 			onClick={handleClick}
-			className="group cursor-pointer overflow-hidden rounded-lg bg-[#2a2a2a] transition-transform hover:scale-[1.02]"
+			className="group flex cursor-pointer flex-col overflow-hidden rounded-lg bg-[#2a2a2a] transition-transform hover:scale-[1.02]"
 		>
-			<div className="aspect-[2/3]">
+			<div id={`banner-${mediaId}`} className="aspect-[2/3]">
 				<ImageComponent
 					width={0}
 					height={0}
-					sizes="600px"
+					sizes="1000px"
 					className="h-full w-full object-cover"
 					src={`https://image.tmdb.org/t/p/w500${imgUrl}`}
 					alt={title}
 				/>
 			</div>
-			<div className="p-4 text-white">
+			<div id={`info-${mediaId}`} className="flex-grow p-4 text-white">
 				<div className="flex items-start justify-between gap-2">
 					<h3 className="font-semibold text-lg leading-tight">{title}</h3>
 					<div className="flex items-center gap-1 text-yellow-500">
@@ -62,6 +63,22 @@ export default function MediaBox({
 							: dayjs(release_date).get('y')}
 					</span>{' '}
 				</div>
+			</div>
+			<div
+				id={`action-${mediaId}`}
+				className="flex justify-center bg-zinc-900 p-4"
+			>
+				<Button
+					color="danger"
+					startContent={<MinusSignSquareIcon className="size-5 text-danger" />}
+					variant="bordered"
+					onPress={e => {
+						console.log(e)
+						console.log('remover')
+					}}
+				>
+					<span className="font-bold">Remover</span>
+				</Button>
 			</div>
 		</div>
 	)
