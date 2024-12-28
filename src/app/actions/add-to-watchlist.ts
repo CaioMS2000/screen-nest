@@ -24,7 +24,7 @@ export async function adddMediaToWatchlistAction(
 			throw new Error('User not found')
 		}
 
-		await prisma.user.update({
+		const userUpdated = await prisma.user.update({
 			where: {
 				username,
 			},
@@ -37,6 +37,8 @@ export async function adddMediaToWatchlistAction(
 				},
 			},
 		})
+
+		console.log(userUpdated)
 
 		revalidatePath(`/movie/${id}`)
 

@@ -11,6 +11,9 @@ interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	imgUrl: string
 	mediaId: number
 	release_date: string
+	sponsorDate: string
+	sponsorPrice: string
+	sponsor: string
 	vote_average: number
 	type: 'movie' | 'serie'
 }
@@ -23,6 +26,9 @@ export default function MediaManageBox({
 	mediaId,
 	release_date,
 	vote_average,
+	sponsorDate,
+	sponsorPrice,
+	sponsor,
 	...props
 }: MediaBoxProps) {
 	const router = useRouter()
@@ -30,6 +36,7 @@ export default function MediaManageBox({
 	const handleClick = () => {
 		router.push(`/${type}/${mediaId}`)
 	}
+
 	return (
 		// biome-ignore lint/a11y/useKeyWithClickEvents:
 		<div
@@ -66,8 +73,19 @@ export default function MediaManageBox({
 			</div>
 			<div
 				id={`action-${mediaId}`}
-				className="flex justify-center bg-zinc-900 p-4"
+				className="flex flex-col justify-center bg-zinc-900 p-4"
 			>
+				<div className="mb-4">
+					<p className="p text-gray-300">
+						Dia: <span className="font-bold">{sponsorDate}</span>
+					</p>
+					<p className="p text-gray-300">
+						Por: <span className="font-bold">{sponsor}</span>
+					</p>
+					<p className="p text-gray-300">
+						Valor: <span className="font-bold">{sponsorPrice}</span>
+					</p>
+				</div>
 				<Button
 					color="danger"
 					startContent={<MinusSignSquareIcon className="size-5 text-danger" />}

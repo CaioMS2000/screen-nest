@@ -31,10 +31,12 @@ export async function sponsorAction(data: SponsorFormData, username: string) {
 				imdbId: data.imdbId,
 				price: Number(data.price),
 				date: new Date(data.date),
+				who: data.name,
 			},
 		})
 		console.log('\n')
 		console.log(sponsor)
+		console.log('sponsor')
 
 		const result = await adddMediaToWatchlistAction(
 			'MOVIE',
@@ -42,7 +44,8 @@ export async function sponsorAction(data: SponsorFormData, username: string) {
 			data.mediaId,
 			username
 		)
-
+		console.log('\n')
+		console.log(result)
 		if (result.success === false) {
 			return {
 				success: false,
