@@ -2,7 +2,6 @@
 import { User } from '@/app/@types/entities/user'
 import { Movie, MovieCredits } from '@/app/@types/tmbd'
 import { adddMediaToWatchedAction } from '@/app/actions/add-to-watched'
-import { adddMediaToWatchlistAction } from '@/app/actions/add-to-watchlist'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
 import { CheckmarkSquare02Icon } from '@/components/houstonicons/check'
@@ -15,7 +14,7 @@ import { convertMinutesToHours } from '@/utils'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 import { useRouter } from 'next/navigation'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { toast } from 'sonner'
 import {
 	Modal,
@@ -74,21 +73,14 @@ export function MediaDetailsPage({ movie, user }: MediaDetailsPageProps) {
 			return
 		}
 
-		await sponsorAction(data, user.username)
+		const result = await sponsorAction(data, user.username)
 
-		// const result = await adddMediaToWatchlistAction(
-		// 	'MOVIE',
-		// 	movie.imdb_id,
-		// 	movie.id,
-		// 	user.username
-		// )
-
-		// if (!result.success) {
-		// 	toast.error('Erro ao adicionar na lista de assistir')
-		// } else {
-		// 	onClose()
-		// 	toast.success('Adicionado na lista de assistir')
-		// }
+		if (!result.success) {
+			toast.error('Erro ao adicionar na lista de assistir')
+		} else {
+			onClose()
+			toast.success('Adicionado na lista de assistir')
+		}
 	}
 
 	async function handleAdddMediaToWatchedAction() {
