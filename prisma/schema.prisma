@@ -31,22 +31,23 @@ model Media {
   interestedUser   User?   @relation("watchList", fields: [interestedUserId], references: [id])
   interestedUserId String? @map("interested_user_id")
 
-  watchedUser   User?         @relation("watched", fields: [watchedUserId], references: [id])
-  watchedUserId String?       @map("watched_user_id")
+  watchedUser   User?   @relation("watched", fields: [watchedUserId], references: [id])
+  watchedUserId String? @map("watched_user_id")
   // @@unique([imdbId, interestedUserId, watchedUserId])
 
   @@map("medias")
 }
 
 model Sponsorship {
-  id    String   @id @default(cuid())
-  date  DateTime
-  price Float
-  mediaId Int
-  imdbId String
+  id      String   @id @default(cuid())
+  date    DateTime
+  price   Float
+  mediaId Int      @map("media_id")
+  imdbId  String   @map("imdb_id")
+  who     String
 
-  user    User   @relation(fields: [userId], references: [id])
-  userId  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
 
   @@map("sponsorships")
 }
