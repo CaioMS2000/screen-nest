@@ -1,6 +1,6 @@
 import Link from 'next/link'
+import { UserSection } from './components/user-section'
 import { Film01Icon } from '../houstonicons/film'
-import { UserSection } from './user-section'
 
 export async function Header() {
 	return (
