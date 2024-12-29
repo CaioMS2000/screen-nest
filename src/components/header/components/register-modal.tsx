@@ -1,10 +1,12 @@
 'use client'
 import { RegisterFormData } from '@/app/@types/zod'
 import { registerFormSchema } from '@/app/@types/zod/schemas'
+import { registerAction } from '@/app/actions/register'
 import { EyeIcon, EyeIconSlash } from '@/components/houstonicons/eye'
 import { ArrangeByLettersAZIcon } from '@/components/houstonicons/letters'
 import { SquareLock01Icon } from '@/components/houstonicons/lock'
 import { UserCircleIcon } from '@/components/houstonicons/user'
+import { USERNAME_TO_LOGIN_URL_STATE } from '@/constants/http'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Button,
@@ -16,14 +18,16 @@ import {
 	ModalHeader,
 	useDisclosure,
 } from '@nextui-org/react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 export default function RegisterModal() {
 	const [isVisible, setIsVisible] = useState(false)
 	const toggleVisibility = () => setIsVisible(!isVisible)
 	const params = useSearchParams()
+	const router = useRouter()
 	const {
 		handleSubmit,
 		reset,
@@ -39,9 +43,21 @@ export default function RegisterModal() {
 	})
 	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
 
-	function onSubmit(data: RegisterFormData) {
-		console.log('registrar com:', data)
-		// onClose()
+	async function onSubmit(data: RegisterFormData) {
+		try {
+			console.log('registrar com:', data)
+			await registerAction(data)
+
+			toast.success('Usuário registrado com sucesso!')
+			onClose()
+			router.push(`/?${USERNAME_TO_LOGIN_URL_STATE}=${data.username}`)
+		} catch (error) {
+			if (error instanceof Error) {
+				return toast.error(error.message)
+			}
+			console.log(error)
+			toast.error('Erro ao registrar usuário')
+		}
 	}
 
 	return (
