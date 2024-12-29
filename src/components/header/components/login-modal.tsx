@@ -1,9 +1,11 @@
 'use client'
 import { LoginFormData } from '@/app/@types/zod'
 import { loginFormSchema } from '@/app/@types/zod/schemas'
+import { loginAction } from '@/app/actions/login'
 import { EyeIcon, EyeIconSlash } from '@/components/houstonicons/eye'
 import { SquareLock01Icon } from '@/components/houstonicons/lock'
 import { UserCircleIcon } from '@/components/houstonicons/user'
+import { USERNAME_TO_LOGIN_URL_STATE } from '@/constants/http'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
 	Button,
@@ -18,6 +20,7 @@ import {
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 export default function LoginModal() {
 	const [isVisible, setIsVisible] = useState(false)
@@ -31,15 +34,24 @@ export default function LoginModal() {
 	} = useForm({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
-			username: params.get('username') ?? 'caio',
+			username: params.get(USERNAME_TO_LOGIN_URL_STATE) ?? 'caio-default',
 			password: '123456789',
 		},
 	})
 	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
 
-	function onSubmit(data: LoginFormData) {
+	async function onSubmit(data: LoginFormData) {
 		console.log('faça login com:', data)
-		// onClose()
+
+		const response = await loginAction(data)
+
+		if (response) {
+			reset()
+			onClose()
+			toast.success('Login realizado com sucesso')
+		} else {
+			toast.error('Usuário ou senha inválidos')
+		}
 	}
 
 	return (

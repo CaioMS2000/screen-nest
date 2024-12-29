@@ -1,23 +1,17 @@
 import { cookies } from 'next/headers'
 
 export class CookieManager {
-	static cookieStore: ReturnType<typeof cookies> | undefined
-
-	constructor() {
-		CookieManager.cookieStore = cookies()
-	}
-
 	static async getCookie(name: string) {
-		CookieManager.cookieStore = cookies()
+		const cookieStore = await cookies()
 
-		const cookieStore = await CookieManager.cookieStore
-		return cookieStore.get(name)
+		const cookie = cookieStore.get(name)
+
+		return cookie
 	}
 
 	static async setCookie(name: string, value: string, options = {}) {
-		CookieManager.cookieStore = cookies()
-
-		const cookieStore = await CookieManager.cookieStore
+		'use server'
+		const cookieStore = await cookies()
 
 		cookieStore.set(name, value, options)
 	}
