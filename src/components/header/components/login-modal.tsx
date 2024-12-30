@@ -17,7 +17,7 @@ import {
 	ModalHeader,
 	useDisclosure,
 } from '@nextui-org/react'
-import { useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -26,6 +26,7 @@ export default function LoginModal() {
 	const [isVisible, setIsVisible] = useState(false)
 	const toggleVisibility = () => setIsVisible(!isVisible)
 	const params = useSearchParams()
+	const router = useRouter()
 	const {
 		handleSubmit,
 		reset,
@@ -48,6 +49,7 @@ export default function LoginModal() {
 		if (response) {
 			reset()
 			onClose()
+			router.push('/')
 			toast.success('Login realizado com sucesso')
 		} else {
 			toast.error('Usuário ou senha inválidos')

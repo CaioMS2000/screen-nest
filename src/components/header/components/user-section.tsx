@@ -2,6 +2,7 @@
 import { useUser } from '@/hooks/user'
 import LoginModal from './login-modal'
 import RegisterModal from './register-modal'
+import { LoggedUser } from './logged-user'
 
 export function UserSection() {
 	const { username, isLoggedIn } = useUser()
@@ -15,7 +16,7 @@ export function UserSection() {
 						<RegisterModal />
 					</>
 				)}
-				{isLoggedIn && <h3 className="h3">Usuário logado</h3>}
+				{isLoggedIn && <LoggedUser />}
 			</div>
 		</>
 	)
