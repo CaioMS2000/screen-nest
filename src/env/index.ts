@@ -5,4 +5,4 @@ export const envSchema = z.object({
 	MODE: z.enum(['development', 'production', 'test']).default('development'),
 })
 
-export const env = envSchema.parse(process.env)
+// export const env = envSchema.parse(process.env)

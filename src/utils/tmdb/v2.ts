@@ -1,5 +1,4 @@
 import { TMDB_BASE_URL } from '@/constants/http'
-import { env } from '@/env'
 import { RequestInit } from 'next/dist/server/web/spec-extension/request'
 
 export type FetchOptions = {
@@ -10,20 +9,19 @@ export type FetchOptions = {
 	}
 } & RequestInit
 
-const defaultOptions: FetchOptions = {
-	method: 'GET',
-	headers: {
-		accept: 'application/json',
-		Authorization: `Bearer ${env.NEXT_PUBLIC_TMDB_TOKEN}`,
-	},
-	cache: 'force-cache',
+function buildOptions(token: string): FetchOptions {
+	return {
+		method: 'GET',
+		headers: {
+			accept: 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+		cache: 'force-cache',
+	}
 }
 
-export function get(url: string, options: FetchOptions = {} as FetchOptions) {
-	const optionsToUse = {
-		...defaultOptions,
-		...options,
-	}
+export function get(url: string, token: string) {
+	const optionsToUse = buildOptions(token)
 	const isUrlComplete = url.startsWith('http')
 	const urlToFetch = isUrlComplete ? url : `${TMDB_BASE_URL}${url}`
 

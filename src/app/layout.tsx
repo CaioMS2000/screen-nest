@@ -19,7 +19,7 @@ export default function RootLayout({
 			lang="en"
 			className="scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-zinc-900 scrollbar-thumb-rounded-full scrollbar-track-rounded-full scrollbar-hide-arrows"
 		>
-			<body className={'dark h-screen bg-app-black-500 antialiased'}>
+			<body className={'dark min-h-screen bg-app-black-500 antialiased'}>
 				<Providers>
 					<Header />
 					{children}

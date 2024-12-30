@@ -18,7 +18,7 @@ export function LoggedUser() {
 	}
 
 	return (
-		<div className="flex gap-4 items-center">
+		<div className="flex items-center gap-4">
 			<span className="flex items-center gap-2">
 				<UserSquareIcon className="size-10" />
 				{username}
