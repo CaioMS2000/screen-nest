@@ -52,7 +52,9 @@ export function Component({
 					onChange={e => setSearchText(e.target.value)}
 				/>
 				<div className="div"></div>
-				{isDeboundedValueEmpty && children && <div className="div">{children}</div>}
+				{isDeboundedValueEmpty && children && (
+					<div className="mt-10 px-2">{children}</div>
+				)}
 			</main>
 		</>
 	)
