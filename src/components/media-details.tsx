@@ -3,6 +3,7 @@ import { User } from '@/app/@types/entities/user'
 import { Movie, MovieCredits } from '@/app/@types/tmbd'
 import { SponsorFormData } from '@/app/@types/zod'
 import { sponsorSchema } from '@/app/@types/zod/schemas'
+import { adddMediaToWatchedtAction } from '@/app/actions/add-media-to-watched'
 import { sponsorAction } from '@/app/actions/sponsor'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
@@ -109,11 +110,17 @@ export function MediaDetails({
 			return
 		}
 
-		// if (!result.success) {
-		// 	toast.error('Erro ao adicionar na lista de assistidos')
-		// } else {
-		// 	toast.success('Adicionado na lista de assistidos')
-		// }
+		const result = await adddMediaToWatchedtAction(
+			imdb_id,
+			'MOVIE',
+			user.username
+		)
+
+		if (!result.success) {
+			toast.error('Erro ao adicionar na lista de assistidos')
+		} else {
+			toast.success('Adicionado na lista de assistidos')
+		}
 	}
 
 	useEffect(() => {
