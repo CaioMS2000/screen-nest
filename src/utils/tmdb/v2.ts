@@ -9,7 +9,10 @@ export type FetchOptions = {
 	}
 } & RequestInit
 
-function buildOptions(token: string): FetchOptions {
+function buildOptions(
+	token: string,
+	options: FetchOptions = {} as FetchOptions
+): FetchOptions {
 	return {
 		method: 'GET',
 		headers: {
@@ -17,11 +20,16 @@ function buildOptions(token: string): FetchOptions {
 			Authorization: `Bearer ${token}`,
 		},
 		cache: 'force-cache',
+		...options,
 	}
 }
 
-export function get(url: string, token: string) {
-	const optionsToUse = buildOptions(token)
+export function get(
+	url: string,
+	token: string,
+	options: FetchOptions = {} as FetchOptions
+) {
+	const optionsToUse = buildOptions(token, options)
 	const isUrlComplete = url.startsWith('http')
 	const urlToFetch = isUrlComplete ? url : `${TMDB_BASE_URL}${url}`
 
