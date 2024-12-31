@@ -1,6 +1,6 @@
 'use client'
 import { User } from '@/app/@types/entities/user'
-import { Movie, MovieCredits } from '@/app/@types/tmbd'
+import { Movie, MovieCredits, TVShow } from '@/app/@types/tmbd'
 import { SponsorFormData } from '@/app/@types/zod'
 import { sponsorSchema } from '@/app/@types/zod/schemas'
 import { adddMediaToWatchedtAction } from '@/app/actions/add-media-to-watched'
@@ -35,18 +35,19 @@ dayjs.locale(ptBR)
 
 interface MediaDetailsProps {
 	user?: User
-	credits: MovieCredits
+	credits?: MovieCredits
 	imdb_id: string
 	poster_path: string
 	title: string
 	release_date: string
 	overview: string
-	runtime: number
+	runtime?: number
 	vote_average: number
 	genres: {
 		id: number
 		name: string
 	}[]
+	createdBy?: TVShow['created_by']
 	id: number
 }
 
@@ -61,6 +62,7 @@ export function MediaDetails({
 	runtime,
 	vote_average,
 	genres,
+	createdBy,
 	id,
 }: MediaDetailsProps) {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
@@ -351,6 +353,28 @@ export function MediaDetails({
 												</div>
 											)
 										})}
+								</div>
+							)}
+							{createdBy && createdBy.length > 0 && (
+								<div>
+									<h2 className="mb-2 font-semibold text-xl">Criação</h2>
+									{createdBy.slice(0, 5).map(creator => (
+										<div key={creator.id} className="flex items-center gap-2 mb-2">
+											{creator.profile_path && (
+												<img
+													src={`https://image.tmdb.org/t/p/w500${creator.profile_path}`}
+													alt={creator.name}
+													className="h-10 w-10 rounded-full"
+												/>
+											)}
+											{!creator.profile_path && (
+												<UserCircleIcon className="h-10 w-10 rounded-full text-gray-400" />
+											)}
+											<div>
+												<p className="font-semibold">{creator.name}</p>
+											</div>
+										</div>
+									))}
 								</div>
 							)}
 						</div>

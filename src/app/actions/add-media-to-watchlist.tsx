@@ -1,7 +1,8 @@
 'use server'
 
-import { prisma } from '@/lib/prisma'
 import { MediaType } from '@/app/@types'
+import { prisma } from '@/lib/prisma'
+import { revalidatePath } from 'next/cache'
 
 export async function adddMediaToWatchlistAction(
 	imdbId: string,
@@ -27,6 +28,12 @@ export async function adddMediaToWatchlistAction(
 		})
 
 		console.log(updatedUser)
+
+		if (mediaType === 'MOVIE') {
+			revalidatePath('/movie')
+		} else if (mediaType === 'SERIES') {
+			revalidatePath('/serie')
+		}
 
 		return {
 			success: true,

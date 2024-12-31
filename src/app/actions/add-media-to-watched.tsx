@@ -29,7 +29,11 @@ export async function adddMediaToWatchedtAction(
 
 		console.log(updatedUser)
 
-		revalidatePath('/movie')
+		if (mediaType === 'MOVIE') {
+			revalidatePath('/movie')
+		} else if (mediaType === 'SERIES') {
+			revalidatePath('/serie')
+		}
 
 		return {
 			success: true,
