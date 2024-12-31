@@ -3,6 +3,7 @@ import { User } from '@/app/@types/entities/user'
 import { Movie, MovieCredits } from '@/app/@types/tmbd'
 import { SponsorFormData } from '@/app/@types/zod'
 import { sponsorSchema } from '@/app/@types/zod/schemas'
+import { sponsorAction } from '@/app/actions/sponsor'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
 import { CheckmarkSquare02Icon } from '@/components/houstonicons/check'
@@ -86,18 +87,20 @@ export function MediaDetails({
 		isInWatchedlist = user.watched.some(media => media.imdbId === imdb_id)
 	}
 
-	async function handleAdddMediaToWatchlist(data: SponsorFormData) {
+	async function handleSponsor(data: SponsorFormData) {
 		if (!user) {
 			router.push('/login')
 			return
 		}
 
-		// if (!result.success) {
-		// 	toast.error('Erro ao adicionar na lista de assistir')
-		// } else {
-		// 	onClose()
-		// 	toast.success('Adicionado na lista de assistir')
-		// }
+		const result = await sponsorAction(data, user.username)
+
+		if (!result.success) {
+			toast.error('Erro ao adicionar na lista de assistir')
+		} else {
+			onClose()
+			toast.success('Adicionado na lista de assistir')
+		}
 	}
 
 	async function handleAdddMediaToWatchedAction() {
@@ -204,7 +207,7 @@ export function MediaDetails({
 												</ModalHeader>
 												<ModalBody>
 													<form
-														onSubmit={handleSubmit(handleAdddMediaToWatchlist)}
+														onSubmit={handleSubmit(handleSponsor)}
 														id="watchlist-form"
 														className="flex flex-col gap-4"
 													>
