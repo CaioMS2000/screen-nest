@@ -42,7 +42,7 @@ model Sponsorship {
   id      String   @id @default(cuid())
   date    DateTime
   price   Float
-  mediaId Int      @map("media_id")
+  mediaId String      @map("media_id")
   imdbId  String   @map("imdb_id")
   who     String
 
