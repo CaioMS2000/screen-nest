@@ -17,7 +17,7 @@ export default async function SeriePage({ params }: { params: PageParams }) {
 			cache: 'force-cache',
 			next: {
 				revalidate: 1 * 60 * 60 * 24,
-				tags: ['movie', `movie-${id}`],
+				tags: ['serie', `serie-${id}`],
 			},
 		}
 	)
