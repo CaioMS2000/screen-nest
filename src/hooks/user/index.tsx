@@ -6,6 +6,7 @@ import { COOKIE_USERNAME } from '@/constants/http'
 
 export function useUser() {
 	const { cookies } = useCookies()
+	const [isLoading, setIsLoading] = useState(true)
 	const [username, setUsername] = useState<string | undefined>(undefined)
 	const isLoggedIn = username !== undefined && username !== ''
 
@@ -15,10 +16,14 @@ export function useUser() {
 		if (cookie) {
 			setUsername(cookie.value)
 		}
+
+		console.log('setting false')
+		setIsLoading(false)
 	}, [cookies])
 
 	return {
 		username,
 		isLoggedIn,
+		isLoading,
 	}
 }
