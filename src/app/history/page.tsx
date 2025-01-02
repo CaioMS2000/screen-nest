@@ -7,6 +7,7 @@ import { getUserSponsorshipsAction } from '../actions/get-user-sponsorships'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 import History from './components/history'
+import { isMovie, isSerie } from '@/utils'
 
 dayjs.locale(ptBR)
 
@@ -15,14 +16,6 @@ type PageParams = Promise<any>
 export default async function HistoryPage({ params }: { params: PageParams }) {
 	const sponsorships = await getUserSponsorshipsAction()
 	const sponsorshipsData: Sponsorship[] = []
-
-	function isMovie(data: TVShow | Movie, mediaType: MediaType): data is Movie {
-		return mediaType === 'MOVIE'
-	}
-
-	function isSerie(data: TVShow | Movie, mediaType: MediaType): data is TVShow {
-		return mediaType === 'SERIES'
-	}
 
 	for (const sponsorship of sponsorships) {
 		const media = await getMediaAction(sponsorship.mediaId)
