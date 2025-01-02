@@ -1,5 +1,7 @@
+import { MinusSignSquareIcon } from '@/components/houstonicons/minus'
 import { StarIcon } from '@/components/houstonicons/star'
 import ImageComponent from '@/components/image-component'
+import { Button } from '@nextui-org/react'
 import dayjs from 'dayjs'
 import Link from 'next/link'
 
@@ -29,8 +31,8 @@ export function MediaManageBox({
 	},
 }: MediaBoxProps) {
 	return (
-		<Link href={`/${type}/${mediaId}`}>
-			<div className="group flex flex-col justify-between h-full cursor-pointer overflow-hidden rounded-lg bg-[#2a2a2a] transition-transform hover:scale-[1.02]">
+		<div className="group flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg bg-[#2a2a2a] transition-transform hover:scale-[1.02]">
+			<Link href={`/${type}/${mediaId}`}>
 				<div className="aspect-[2/3]">
 					<ImageComponent
 						width={0}
@@ -41,7 +43,7 @@ export function MediaManageBox({
 						alt={title}
 					/>
 				</div>
-				<div className="flex flex-col flex-grow p-4 text-white">
+				<div className="flex flex-grow flex-col p-4 text-white">
 					<div className="flex items-start justify-between gap-2">
 						<h3 className="font-semibold text-lg leading-tight">{title}</h3>
 						<div className="flex items-center gap-1 text-yellow-500">
@@ -59,7 +61,17 @@ export function MediaManageBox({
 						</span>
 					</div>
 				</div>
+			</Link>
+			<div className="flex flex-col bg-app-black p-4">
+				<Button
+					color="danger"
+					startContent={<MinusSignSquareIcon className="size-5 text-danger" />}
+					variant="bordered"
+					onPress={e => console.log(e)}
+				>
+					Remover
+				</Button>
 			</div>
-		</Link>
+		</div>
 	)
 }

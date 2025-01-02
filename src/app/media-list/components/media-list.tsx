@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { MediaBoxData, MediaManageBox } from './media-manage-box'
-import { CheckmarkSquare02Icon } from '@/components/houstonicons/check'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { Clock01Icon } from '@/components/houstonicons/clock'
 import { cn } from '@/lib/utils'
