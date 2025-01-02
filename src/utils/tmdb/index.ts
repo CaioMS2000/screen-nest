@@ -1,5 +1,5 @@
-/*import { TMDB_BASE_URL } from '@/constants/http'
-import { env } from '@/env'
+import { TMDB_BASE_URL } from '@/constants/http'
+import { envObject, envSchema } from '@/env'
 import { RequestInit } from 'next/dist/server/web/spec-extension/request'
 
 export type FetchOptions = {
@@ -10,6 +10,7 @@ export type FetchOptions = {
 	}
 } & RequestInit
 
+const env = envSchema.parse(envObject)
 const defaultOptions: FetchOptions = {
 	method: 'GET',
 	headers: {
@@ -29,4 +30,3 @@ export function get(url: string, options: FetchOptions = {} as FetchOptions) {
 
 	return fetch(urlToFetch, optionsToUse)
 }
-*/

@@ -42,8 +42,6 @@ export default function LoginModal() {
 	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
 
 	async function onSubmit(data: LoginFormData) {
-		console.log('faça login com:', data)
-
 		const response = await loginAction(data)
 
 		if (response) {

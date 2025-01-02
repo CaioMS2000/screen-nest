@@ -11,7 +11,6 @@ export async function loginAction(data: LoginFormData) {
 	if (isLogged) {
 		const cookieStore = await cookies()
 
-		console.log('inserting cookies', COOKIE_USERNAME, user.username)
 		cookieStore.set(COOKIE_USERNAME, user.username)
 		cookieStore.set(COOKIE_USER_NAME, user.name)
 		// CookieManager.setCookie(COOKIE_USERNAME, user.username)

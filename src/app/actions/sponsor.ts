@@ -13,13 +13,13 @@ export async function sponsorAction(data: SponsorFormData, username: string) {
 		const { mediaId, imdbId, name, price, date, mediaType } = data
 		const result = await adddMediaToWatchlistAction(imdbId, mediaType, username)
 
-		if (!result.success) {
+		if (!result.success || !result.media) {
 			throw new Error('Error adding media to watchlist')
 		}
 
 		const newSponsor = await prisma.sponsorship.create({
 			data: {
-				mediaId,
+				mediaId: result.media.id,
 				imdbId,
 				who: name,
 				price: Number.parseFloat(price),

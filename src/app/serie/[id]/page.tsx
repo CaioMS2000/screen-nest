@@ -27,8 +27,6 @@ export default async function SeriePage({ params }: { params: PageParams }) {
 	}
 	const user = await getUserAction()
 
-	console.log(serie)
-
 	return (
 		<>
 			<MediaDetails

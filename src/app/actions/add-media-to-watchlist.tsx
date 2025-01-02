@@ -10,24 +10,40 @@ export async function adddMediaToWatchlistAction(
 	username: string
 ) {
 	try {
-		const updatedUser = await prisma.user.update({
+		// const updatedUser = await prisma.user.update({
+		// 	where: {
+		// 		username,
+		// 	},
+		// 	data: {
+		// 		watchList: {
+		// 			create: {
+		// 				imdbId,
+		// 				type: mediaType,
+		// 			},
+		// 		},
+		// 	},
+		// 	include: {
+		// 		watchList: true,
+		// 	},
+		// })
+
+		// console.log(updatedUser)
+		const user = await prisma.user.findUniqueOrThrow({
 			where: {
 				username,
-			},
-			data: {
-				watchList: {
-					create: {
-						imdbId,
-						type: mediaType,
-					},
-				},
 			},
 			include: {
 				watchList: true,
 			},
 		})
 
-		console.log(updatedUser)
+		const media = await prisma.media.create({
+			data: {
+				imdbId,
+				type: mediaType,
+				interestedUser: { connect: { id: user.id } },
+			},
+		})
 
 		if (mediaType === 'MOVIE') {
 			revalidatePath('/movie')
@@ -37,6 +53,7 @@ export async function adddMediaToWatchlistAction(
 
 		return {
 			success: true,
+			media,
 		}
 	} catch (error) {
 		const e = error as unknown as Error & { stack: string }

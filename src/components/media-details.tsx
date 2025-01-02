@@ -125,10 +125,6 @@ export function MediaDetails({
 		}
 	}
 
-	useEffect(() => {
-		console.log(errors)
-	}, [errors])
-
 	return (
 		<div className="min-h-screen bg-[#121212] pb-12">
 			{/* Hero Section */}

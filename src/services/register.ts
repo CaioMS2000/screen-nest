@@ -6,7 +6,6 @@ export async function register(
 	username: string,
 	password: string
 ) {
-	console.log('register', name, username, password)
 	const hashedPassword = await hash(password, 3)
 	const user = await prisma.user.findUnique({
 		where: {
@@ -26,6 +25,4 @@ export async function register(
 			passwordHash: hashedPassword,
 		},
 	})
-
-	console.log(newUser)
 }

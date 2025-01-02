@@ -17,7 +17,6 @@ export function useUser() {
 			setUsername(cookie.value)
 		}
 
-		console.log('setting false')
 		setIsLoading(false)
 	}, [cookies])
 

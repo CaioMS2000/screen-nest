@@ -27,8 +27,6 @@ export async function adddMediaToWatchedtAction(
 			},
 		})
 
-		console.log(updatedUser)
-
 		if (mediaType === 'MOVIE') {
 			revalidatePath('/movie')
 		} else if (mediaType === 'SERIES') {

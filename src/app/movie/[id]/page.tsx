@@ -27,8 +27,6 @@ export default async function MoviePage({ params }: { params: PageParams }) {
 	}
 	const user = await getUserAction()
 
-	console.log(user)
-
 	return (
 		<>
 			<MediaDetails

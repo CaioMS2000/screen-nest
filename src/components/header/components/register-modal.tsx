@@ -45,7 +45,6 @@ export default function RegisterModal() {
 
 	async function onSubmit(data: RegisterFormData) {
 		try {
-			console.log('registrar com:', data)
 			await registerAction(data)
 
 			toast.success('Usuário registrado com sucesso!')
