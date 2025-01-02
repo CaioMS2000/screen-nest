@@ -1,17 +1,18 @@
 'use client'
 
 import { useState } from 'react'
-import { MediaBoxData, MediaManageBox } from './media-manage-box'
+import { ListTab, MediaBoxData, MediaManageBox } from './media-manage-box'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { Clock01Icon } from '@/components/houstonicons/clock'
 import { cn } from '@/lib/utils'
+import { Optional } from '@/utils/optional'
+
+export type MediaBoxProps = Optional<MediaBoxData, 'list'>
 
 interface MediaListProps {
-	watched: MediaBoxData[]
-	watchList: MediaBoxData[]
+	watched: MediaBoxProps[]
+	watchList: MediaBoxProps[]
 }
-
-type ListTab = 'watched' | 'watchList'
 
 export default function MediaList({ watchList, watched }: MediaListProps) {
 	const [tab, setTab] = useState<ListTab>('watchList')
@@ -43,11 +44,17 @@ export default function MediaList({ watchList, watched }: MediaListProps) {
 			<div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 				{tab === 'watchList' &&
 					watchList.map(media => (
-						<MediaManageBox key={media.mediaId} boxData={media} />
+						<MediaManageBox
+							key={media.mediaId}
+							boxData={{ ...media, list: 'watchList' }}
+						/>
 					))}
 				{tab === 'watched' &&
 					watched.map(media => (
-						<MediaManageBox key={media.mediaId} boxData={media} />
+						<MediaManageBox
+							key={media.mediaId}
+							boxData={{ ...media, list: 'watched' }}
+						/>
 					))}
 			</div>
 		</div>

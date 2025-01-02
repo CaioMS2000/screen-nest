@@ -3,8 +3,7 @@ import { get } from '@/utils/tmdb'
 import { Movie, TVShow } from '../@types/tmbd'
 import { getUserWatchedAction } from '../actions/get-user-watched'
 import { getUserWatchListAction } from '../actions/get-user-watchlist'
-import { MediaBoxData } from './components/media-manage-box'
-import MediaList from './components/media-list'
+import MediaList, { MediaBoxProps } from './components/media-list'
 
 type PageParams = Promise<any>
 
@@ -13,8 +12,8 @@ export default async function MediaListPage({
 }: { params: PageParams }) {
 	const watchedMedia = await getUserWatchedAction()
 	const watchListMedia = await getUserWatchListAction()
-	const watched: MediaBoxData[] = []
-	const watchList: MediaBoxData[] = []
+	const watched: MediaBoxProps[] = []
+	const watchList: MediaBoxProps[] = []
 
 	for (const media of watchedMedia) {
 		const mediaDomain = media.type === 'MOVIE' ? 'movie' : 'tv'
@@ -31,7 +30,8 @@ export default async function MediaListPage({
 		const data: TVShow | Movie = await response.json()
 
 		if (isMovie(data, media.type)) {
-			const pre: MediaBoxData = {
+			const pre: MediaBoxProps = {
+				imdbId: media.imdbId,
 				imgUrl: data.poster_path,
 				title: data.title,
 				mediaId: data.id,
@@ -42,7 +42,8 @@ export default async function MediaListPage({
 
 			watched.push(pre)
 		} else if (isSerie(data, media.type)) {
-			const pre: MediaBoxData = {
+			const pre: MediaBoxProps = {
+				imdbId: media.imdbId,
 				imgUrl: data.poster_path,
 				title: data.name,
 				mediaId: data.id,
@@ -70,7 +71,8 @@ export default async function MediaListPage({
 		const data: TVShow | Movie = await response.json()
 
 		if (isMovie(data, media.type)) {
-			const pre: MediaBoxData = {
+			const pre: MediaBoxProps = {
+				imdbId: media.imdbId,
 				imgUrl: data.poster_path,
 				title: data.title,
 				mediaId: data.id,
@@ -81,7 +83,8 @@ export default async function MediaListPage({
 
 			watchList.push(pre)
 		} else if (isSerie(data, media.type)) {
-			const pre: MediaBoxData = {
+			const pre: MediaBoxProps = {
+				imdbId: media.imdbId,
 				imgUrl: data.poster_path,
 				title: data.name,
 				mediaId: data.id,

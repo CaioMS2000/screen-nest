@@ -1,18 +1,24 @@
+import { removeMediaFromListAction } from '@/app/actions/remove-media-from-list'
 import { MinusSignSquareIcon } from '@/components/houstonicons/minus'
 import { StarIcon } from '@/components/houstonicons/star'
 import ImageComponent from '@/components/image-component'
 import { Button } from '@nextui-org/react'
 import dayjs from 'dayjs'
 import Link from 'next/link'
+import { toast } from 'sonner'
 
 export interface MediaBoxData {
+	imdbId: string
 	title: string
 	imgUrl: string
 	mediaId: number
 	release_date: string
 	vote_average: number
 	type: 'movie' | 'serie'
+	list: ListTab
 }
+
+export type ListTab = 'watched' | 'watchList'
 
 interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	boxData: MediaBoxData
@@ -23,13 +29,25 @@ export function MediaManageBox({
 	boxData: {
 		title,
 		imgUrl,
+		imdbId,
 		type,
+		list,
 		mediaId,
 		release_date,
 		vote_average,
 		...props
 	},
 }: MediaBoxProps) {
+	async function handleDelete() {
+		const result = await removeMediaFromListAction(imdbId, list)
+
+		if (!result.success) {
+			toast.error('Erro ao remover da lista')
+		} else {
+			toast.success('Removido com sucesso')
+		}
+	}
+
 	return (
 		<div className="group flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg bg-[#2a2a2a] transition-transform hover:scale-[1.02]">
 			<Link href={`/${type}/${mediaId}`}>
@@ -67,7 +85,7 @@ export function MediaManageBox({
 					color="danger"
 					startContent={<MinusSignSquareIcon className="size-5 text-danger" />}
 					variant="bordered"
-					onPress={e => console.log(e)}
+					onPress={handleDelete}
 				>
 					Remover
 				</Button>
