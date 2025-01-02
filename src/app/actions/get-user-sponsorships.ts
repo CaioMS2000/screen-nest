@@ -1,6 +1,6 @@
 'use server'
 import { redirect } from 'next/navigation'
-import { getUserAction } from '../actions/get-user'
+import { getUserAction } from './get-user'
 import { prisma } from '@/lib/prisma'
 
 export async function getUserSponsorshipsAction() {
