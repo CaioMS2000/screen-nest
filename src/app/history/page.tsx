@@ -1,4 +1,3 @@
-import { MediaType } from '@/app/@types'
 import { get } from '@/utils/tmdb'
 import { Sponsorship } from '../@types'
 import { Movie, TVShow } from '../@types/tmbd'
