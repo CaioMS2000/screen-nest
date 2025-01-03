@@ -35,8 +35,8 @@ export default function LoginModal() {
 	} = useForm({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
-			username: params.get(USERNAME_TO_LOGIN_URL_STATE) ?? 'caio-default',
-			password: '123456789',
+			username: params.get(USERNAME_TO_LOGIN_URL_STATE) ?? '',
+			password: '',
 		},
 	})
 	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()

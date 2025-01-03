@@ -36,9 +36,9 @@ export default function RegisterModal() {
 	} = useForm({
 		resolver: zodResolver(registerFormSchema),
 		defaultValues: {
-			name: 'Caio M.',
-			username: params.get('username') ?? 'caio',
-			password: '123456789',
+			name: '',
+			username: params.get('username') ?? '',
+			password: '',
 		},
 	})
 	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
