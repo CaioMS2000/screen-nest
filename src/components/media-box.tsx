@@ -6,7 +6,7 @@ import Link from 'next/link'
 interface MediaBoxProps extends React.HTMLProps<HTMLDivElement> {
 	title: string
 	imgUrl: string
-	mediaId: number
+	mediaId: string
 	release_date: string
 	vote_average: number
 	type: 'movie' | 'serie'

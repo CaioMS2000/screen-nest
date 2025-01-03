@@ -1,6 +1,7 @@
 'use client'
+import { MediaMetaList } from '@/app/@types'
 import { User } from '@/app/@types/entities/user'
-import { Movie, MovieCredits, TVShow } from '@/app/@types/tmbd'
+import { MovieCredits, TVShow } from '@/app/@types/tmbd'
 import { SponsorFormData } from '@/app/@types/zod'
 import { sponsorSchema } from '@/app/@types/zod/schemas'
 import { adddMediaToWatchedtAction } from '@/app/actions/add-media-to-watched'
@@ -27,7 +28,6 @@ import { Button } from '@nextui-org/react'
 import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -36,6 +36,8 @@ dayjs.locale(ptBR)
 interface MediaDetailsProps {
 	user?: User
 	credits?: MovieCredits
+	watchlist?: MediaMetaList
+	watchedList?: MediaMetaList
 	imdb_id: string
 	poster_path: string
 	title: string
@@ -48,7 +50,7 @@ interface MediaDetailsProps {
 		name: string
 	}[]
 	createdBy?: TVShow['created_by']
-	id: number
+	id: string
 }
 
 export function MediaDetails({
@@ -64,6 +66,8 @@ export function MediaDetails({
 	genres,
 	createdBy,
 	id,
+	watchlist,
+	watchedList,
 }: MediaDetailsProps) {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 	const {
@@ -85,9 +89,9 @@ export function MediaDetails({
 	let isInWatchlist = false
 	let isInWatchedlist = false
 
-	if (user) {
-		isInWatchlist = user.watchList.some(media => media.imdbId === imdb_id)
-		isInWatchedlist = user.watched.some(media => media.imdbId === imdb_id)
+	if (user && watchlist && watchedList) {
+		isInWatchlist = watchlist.some(media => media.mediaId === imdb_id)
+		isInWatchedlist = watchedList.some(media => media.mediaId === imdb_id)
 	}
 
 	async function handleSponsor(data: SponsorFormData) {
@@ -96,7 +100,7 @@ export function MediaDetails({
 			return
 		}
 
-		const result = await sponsorAction(data, user.username)
+		const result = await sponsorAction(data)
 
 		if (!result.success) {
 			toast.error('Erro ao adicionar na lista de assistir')
@@ -112,11 +116,7 @@ export function MediaDetails({
 			return
 		}
 
-		const result = await adddMediaToWatchedtAction(
-			imdb_id,
-			'MOVIE',
-			user.username
-		)
+		const result = await adddMediaToWatchedtAction(imdb_id, 'MOVIE')
 
 		if (!result.success) {
 			toast.error('Erro ao adicionar na lista de assistidos')

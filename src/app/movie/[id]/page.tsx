@@ -1,5 +1,10 @@
+import { MediaMetaList } from '@/app/@types'
 import { Movie, MovieCredits } from '@/app/@types/tmbd'
+import { getMediaAction } from '@/app/actions/get-media'
+import { getMediaByIdAction } from '@/app/actions/get-media-by-id'
 import { getUserAction } from '@/app/actions/get-user'
+import { getUserWatchedAction } from '@/app/actions/get-user-watched'
+import { getUserWatchListAction } from '@/app/actions/get-user-watchlist'
 import { MediaDetails } from '@/components/media-details'
 import { envSchema, envObject } from '@/env'
 import { get } from '@/utils/tmdb/v2'
@@ -26,12 +31,19 @@ export default async function MoviePage({ params }: { params: PageParams }) {
 		credits: MovieCredits
 	}
 	const user = await getUserAction()
+	let watched: MediaMetaList | undefined
+	let watchlist: MediaMetaList | undefined
+
+	if (user) {
+		watched = await getUserWatchedAction()
+		watchlist = await getUserWatchListAction()
+	}
 
 	return (
 		<>
 			<MediaDetails
 				user={user}
-				id={movie.id}
+				id={id}
 				imdb_id={movie.imdb_id}
 				poster_path={movie.poster_path}
 				title={movie.title}
@@ -41,6 +53,8 @@ export default async function MoviePage({ params }: { params: PageParams }) {
 				vote_average={movie.vote_average}
 				credits={movieWithCredits.credits}
 				genres={movie.genres}
+				watchlist={watchlist}
+				watchedList={watched}
 			/>
 		</>
 	)

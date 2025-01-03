@@ -1,4 +1,4 @@
-import { NotDetailedTVShow } from '@/app/@types/tmbd'
+import { NotDetailedTVShow, TVShow } from '@/app/@types/tmbd'
 import { envSchema } from '@/env'
 import { get } from '@/utils/tmdb/v2'
 import { MediaBox } from './media-box'
@@ -26,7 +26,7 @@ export async function PopularSeriesSection() {
 							title={serie.name}
 							imgUrl={serie.poster_path}
 							type="serie"
-							mediaId={serie.id}
+							mediaId={String(serie.id)}
 							release_date={serie.first_air_date}
 							vote_average={serie.vote_average}
 						/>

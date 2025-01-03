@@ -15,3 +15,9 @@ export type Sponsorship = {
 	date: Date
 	status: string
 }
+
+export type MediaMetaList = {
+	id: string
+	userId: string
+	mediaId: string
+}[]

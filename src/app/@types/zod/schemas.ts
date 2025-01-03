@@ -25,7 +25,7 @@ export const registerFormSchema = z.object({
 
 export const sponsorSchema = z.object({
 	name: z.string(),
-	mediaId: z.number(),
+	mediaId: z.string(),
 	mediaType: z.custom<MediaType>(),
 	imdbId: z.string(),
 	price: z.string().regex(/^\d+(\.\d{2})?$/, 'Formato inválido'), // Ex: '10.50'
