@@ -21,7 +21,7 @@ export async function sponsorAction(data: SponsorFormData) {
 
 		const newSponsor = await prisma.sponsorship.create({
 			data: {
-				mediaId: result.media.id,
+				mediaImdbId: result.media.imdbId,
 				userId: user.id,
 				who: name,
 				price: Number.parseFloat(price),

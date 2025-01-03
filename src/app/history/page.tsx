@@ -17,7 +17,7 @@ export default async function HistoryPage({ params }: { params: PageParams }) {
 	const sponsorshipsData: Sponsorship[] = []
 
 	for (const sponsorship of sponsorships) {
-		const media = await getMediaAction(sponsorship.mediaId)
+		const media = await getMediaAction(sponsorship.mediaImdbId)
 		const mediaDomain = media.type === 'MOVIE' ? 'movie' : 'tv'
 		const response = await get(
 			`/${mediaDomain}/${media.imdbId}?language=pt-BR&append_to_response=credits`,
@@ -25,7 +25,7 @@ export default async function HistoryPage({ params }: { params: PageParams }) {
 				cache: 'force-cache',
 				next: {
 					revalidate: 1 * 60 * 60 * 24,
-					tags: [`${mediaDomain}`, `${mediaDomain}-${media.id}`],
+					tags: [`${mediaDomain}`, `${mediaDomain}-${media.imdbId}`],
 				},
 			}
 		)
@@ -68,14 +68,3 @@ export default async function HistoryPage({ params }: { params: PageParams }) {
 		</>
 	)
 }
-// {
-//     id: '1',
-//     media: {
-//       title: 'Inception',
-//       posterUrl: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=500'
-//     },
-//     donatedBy: 'João Silva',
-//     amount: 50.0,
-//     date: new Date('2024-02-15'),
-//     status: 'pending'
-//   }

@@ -19,5 +19,5 @@ export type Sponsorship = {
 export type MediaMetaList = {
 	id: string
 	userId: string
-	mediaId: string
+	mediaImdbId: string
 }[]

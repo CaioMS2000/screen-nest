@@ -27,7 +27,9 @@ export async function removeMediaFromListAction(imdbId: string, list: List) {
 			selectedList = watchlist
 		}
 
-		const index = selectedList.findIndex(item => item.mediaId === media.id)
+		const index = selectedList.findIndex(
+			item => item.mediaImdbId === media.imdbId
+		)
 
 		if (index === -1) {
 			throw new Error('Media not found in list')

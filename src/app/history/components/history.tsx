@@ -15,20 +15,20 @@ export default function History({ sponsorships }: HistoryProps) {
 	)
 
 	return (
-		<div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-			<div className="flex items-center justify-between mb-8">
+		<div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+			<div className="mb-8 flex items-center justify-between">
 				<div className="flex items-center gap-4">
 					<Link
 						href={'/'}
-						className="p-2 hover:bg-gray-800 rounded-full transition-colors"
+						className="rounded-full p-2 transition-colors hover:bg-gray-800"
 					>
-						<ArrowLeft03Icon className="w-6 h-6" />
+						<ArrowLeft03Icon className="h-6 w-6 text-white" />
 					</Link>
-					<h1 className="text-2xl font-bold">Histórico de Doações</h1>
+					<h1 className="font-bold text-2xl">Histórico de Doações</h1>
 				</div>
 				<div className="text-right">
-					<p className="text-sm text-gray-400">Total Recebido</p>
-					<p className="text-2xl font-bold text-green-500">
+					<p className="text-gray-400 text-sm">Total Recebido</p>
+					<p className="font-bold text-2xl text-green-500">
 						{new Intl.NumberFormat('pt-BR', {
 							style: 'currency',
 							currency: 'BRL',
@@ -41,19 +41,18 @@ export default function History({ sponsorships }: HistoryProps) {
 				{sponsorships.map(sponsor => (
 					<div
 						key={sponsor.id}
-						className="bg-[#2a2a2a] rounded-lg p-4 flex items-center gap-4"
+						className="flex items-center gap-4 rounded-lg bg-[#2a2a2a] p-4"
 					>
 						<img
-							// src={sponsor.media.posterUrl}
 							src={`https://image.tmdb.org/t/p/w500${sponsor.media.posterUrl}`}
 							alt={sponsor.media.title}
-							className="w-16 h-24 object-cover rounded"
+							className="h-24 w-16 rounded object-cover"
 						/>
 						<div className="flex-1">
 							<h3 className="font-semibold">{sponsor.media.title}</h3>
-							<p className="text-sm text-gray-400">Doação de {sponsor.donatedBy}</p>
+							<p className="text-gray-400 text-sm">Doação de {sponsor.donatedBy}</p>
 							<div className="mt-2 flex items-center gap-4 text-sm">
-								<span className="text-green-500 font-medium">
+								<span className="font-medium text-green-500">
 									{new Intl.NumberFormat('pt-BR', {
 										style: 'currency',
 										currency: 'BRL',

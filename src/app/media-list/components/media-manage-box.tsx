@@ -32,7 +32,6 @@ export function MediaManageBox({
 		imdbId,
 		type,
 		list,
-		mediaId,
 		release_date,
 		vote_average,
 		...props
@@ -50,7 +49,7 @@ export function MediaManageBox({
 
 	return (
 		<div className="group flex h-full cursor-pointer flex-col justify-between overflow-hidden rounded-lg bg-[#2a2a2a] transition-transform hover:scale-[1.02]">
-			<Link href={`/${type}/${mediaId}`}>
+			<Link href={`/${type}/${imdbId}`}>
 				<div className="aspect-[2/3]">
 					<ImageComponent
 						width={0}

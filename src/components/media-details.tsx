@@ -90,8 +90,8 @@ export function MediaDetails({
 	let isInWatchedlist = false
 
 	if (user && watchlist && watchedList) {
-		isInWatchlist = watchlist.some(media => media.mediaId === imdb_id)
-		isInWatchedlist = watchedList.some(media => media.mediaId === imdb_id)
+		isInWatchlist = watchlist.some(media => media.mediaImdbId === imdb_id)
+		isInWatchedlist = watchedList.some(media => media.mediaImdbId === imdb_id)
 	}
 
 	async function handleSponsor(data: SponsorFormData) {

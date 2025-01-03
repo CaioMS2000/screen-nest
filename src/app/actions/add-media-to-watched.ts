@@ -29,7 +29,7 @@ export async function adddMediaToWatchedtAction(
 
 		const newElement = await prisma.watchedList.create({
 			data: {
-				mediaId: media.id,
+				mediaImdbId: media.imdbId,
 				userId: user.id,
 			},
 		})
