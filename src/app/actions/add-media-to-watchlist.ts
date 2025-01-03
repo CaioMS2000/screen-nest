@@ -27,19 +27,29 @@ export async function adddMediaToWatchlistAction(
 			throw new Error('User not found')
 		}
 
-		const newElement = await prisma.watchlist.create({
-			data: {
+		const elementInList = await prisma.watchlist.findFirst({
+			where: {
 				mediaImdbId: media.imdbId,
 				userId: user.id,
 			},
 		})
 
-		console.log(newElement)
+		if (!elementInList) {
+			const newElement = await prisma.watchlist.create({
+				data: {
+					mediaImdbId: media.imdbId,
+					userId: user.id,
+				},
+			})
 
-		if (mediaType === 'MOVIE') {
-			revalidatePath('/movie')
-		} else if (mediaType === 'SERIES') {
-			revalidatePath('/serie')
+			console.log(newElement)
+			console.log('revalidating', mediaType)
+
+			if (mediaType === 'MOVIE') {
+				revalidatePath('/movie')
+			} else if (mediaType === 'SERIES') {
+				revalidatePath('/serie')
+			}
 		}
 
 		return {

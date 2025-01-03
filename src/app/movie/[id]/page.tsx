@@ -1,7 +1,5 @@
 import { MediaMetaList } from '@/app/@types'
 import { Movie, MovieCredits } from '@/app/@types/tmbd'
-import { getMediaAction } from '@/app/actions/get-media'
-import { getMediaByIdAction } from '@/app/actions/get-media-by-id'
 import { getUserAction } from '@/app/actions/get-user'
 import { getUserWatchedAction } from '@/app/actions/get-user-watched'
 import { getUserWatchListAction } from '@/app/actions/get-user-watchlist'
@@ -55,6 +53,7 @@ export default async function MoviePage({ params }: { params: PageParams }) {
 				genres={movie.genres}
 				watchlist={watchlist}
 				watchedList={watched}
+				mediaType="MOVIE"
 			/>
 		</>
 	)

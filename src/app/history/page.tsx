@@ -18,6 +18,11 @@ export default async function HistoryPage({ params }: { params: PageParams }) {
 
 	for (const sponsorship of sponsorships) {
 		const media = await getMediaAction(sponsorship.mediaImdbId)
+
+		if (!media) {
+			throw new Error('Media not found')
+		}
+
 		const mediaDomain = media.type === 'MOVIE' ? 'movie' : 'tv'
 		const response = await get(
 			`/${mediaDomain}/${media.imdbId}?language=pt-BR&append_to_response=credits`,

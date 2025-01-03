@@ -18,6 +18,11 @@ export default async function MediaListPage({
 
 	for (const watchedMedia of watchedMedias) {
 		const media = await getMediaAction(watchedMedia.mediaImdbId)
+
+		if (!media) {
+			throw new Error('Media not found')
+		}
+
 		const mediaDomain = media.type === 'MOVIE' ? 'movie' : 'tv'
 		const response = await get(
 			`/${mediaDomain}/${media.imdbId}?language=pt-BR&append_to_response=credits`,
@@ -60,6 +65,11 @@ export default async function MediaListPage({
 
 	for (const watchlistMedia of watchListMedias) {
 		const media = await getMediaAction(watchlistMedia.mediaImdbId)
+
+		if (!media) {
+			throw new Error('Media not found')
+		}
+
 		const mediaDomain = media.type === 'MOVIE' ? 'movie' : 'tv'
 		const response = await get(
 			`/${mediaDomain}/${media.imdbId}?language=pt-BR&append_to_response=credits`,

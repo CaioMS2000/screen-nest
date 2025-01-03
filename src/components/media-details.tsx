@@ -30,6 +30,7 @@ import ptBR from 'dayjs/locale/pt-br'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { MediaType } from '@/app/@types'
 
 dayjs.locale(ptBR)
 
@@ -51,6 +52,7 @@ interface MediaDetailsProps {
 	}[]
 	createdBy?: TVShow['created_by']
 	id: string
+	mediaType: MediaType
 }
 
 export function MediaDetails({
@@ -68,6 +70,7 @@ export function MediaDetails({
 	id,
 	watchlist,
 	watchedList,
+	mediaType,
 }: MediaDetailsProps) {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 	const {
@@ -82,7 +85,7 @@ export function MediaDetails({
 			imdbId: imdb_id,
 			name: 'caio',
 			price: '1',
-			mediaType: 'MOVIE',
+			mediaType: mediaType,
 		},
 	})
 	const router = useRouter()
