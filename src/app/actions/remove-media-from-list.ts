@@ -1,71 +1,50 @@
 'use server'
 
-import { COOKIE_USERNAME } from '@/constants/http'
-import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
-import { cookies } from 'next/headers'
+import { getUserWatchedAction } from './get-user-watched'
+import { getUserWatchListAction } from './get-user-watchlist'
+import { getMediaAction } from './get-media'
+import { prisma } from '@/lib/prisma'
 
 type List = 'watched' | 'watchList'
 
 export async function removeMediaFromListAction(imdbId: string, list: List) {
 	try {
-		const cookieStore = await cookies()
-		const username = cookieStore.get(COOKIE_USERNAME)
+		const watched = await getUserWatchedAction()
+		const watchlist = await getUserWatchListAction()
+		const media = await getMediaAction(imdbId)
 
-		if (!username || !username.value) {
-			throw new Error('User not found')
-		}
-
-		const user = await prisma.user.findUniqueOrThrow({
-			where: {
-				username: username.value,
-			},
-			include: {
-				watched: true,
-				watchList: true,
-			},
-		})
-
-		type ListType = typeof user.watched extends Array<infer U> ? U : never
-
-		let mediaList: ListType[]
-
-		if (list === 'watched') {
-			mediaList = user.watched
-		} else {
-			mediaList = user.watchList
-		}
-
-		const mediaIndex = mediaList.findIndex(media => media.imdbId === imdbId)
-
-		if (mediaIndex === -1) {
+		if (!media) {
 			throw new Error('Media not found')
 		}
 
+		type ListType = typeof watched
+		let selectedList: ListType
+
 		if (list === 'watched') {
-			await prisma.user.update({
+			selectedList = watched
+		} else {
+			selectedList = watchlist
+		}
+
+		const index = selectedList.findIndex(item => item.mediaId === media.id)
+
+		if (index === -1) {
+			throw new Error('Media not found in list')
+		}
+
+		const elementId = selectedList[index].id
+
+		if (list === 'watched') {
+			await prisma.watchedList.delete({
 				where: {
-					id: user.id,
-				},
-				data: {
-					watched: {
-						delete: {
-							id: mediaList[mediaIndex].id,
-						},
-					},
+					id: elementId,
 				},
 			})
 		} else {
-			await prisma.user.update({
+			await prisma.watchlist.delete({
 				where: {
-					id: user.id,
-				},
-				data: {
-					watchList: {
-						delete: {
-							id: mediaList[mediaIndex].id,
-						},
-					},
+					id: elementId,
 				},
 			})
 		}

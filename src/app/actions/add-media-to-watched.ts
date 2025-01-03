@@ -3,29 +3,38 @@
 import { prisma } from '@/lib/prisma'
 import { MediaType } from '@/app/@types'
 import { revalidatePath } from 'next/cache'
+import { getMediaAction } from './get-media'
+import { createMediaAction } from './create-media'
+import { getUserAction } from './get-user'
 
 export async function adddMediaToWatchedtAction(
 	imdbId: string,
-	mediaType: MediaType,
-	username: string
+	mediaType: MediaType
 ) {
 	try {
-		const updatedUser = await prisma.user.update({
-			where: {
-				username,
-			},
+		const existingMedia = await getMediaAction(imdbId)
+		let media: NonNullable<Awaited<ReturnType<typeof getMediaAction>>>
+
+		if (existingMedia) {
+			media = existingMedia
+		} else {
+			media = await createMediaAction(imdbId, mediaType)
+		}
+
+		const user = await getUserAction()
+
+		if (!user) {
+			throw new Error('User not found')
+		}
+
+		const newElement = await prisma.watchedList.create({
 			data: {
-				watched: {
-					create: {
-						imdbId,
-						type: mediaType,
-					},
-				},
-			},
-			include: {
-				watched: true,
+				mediaId: media.id,
+				userId: user.id,
 			},
 		})
+
+		console.log(newElement)
 
 		if (mediaType === 'MOVIE') {
 			revalidatePath('/movie')

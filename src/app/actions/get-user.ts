@@ -17,28 +17,12 @@ export async function getUserAction(): Promise<User | undefined> {
 			where: {
 				username: username.value,
 			},
-			include: {
-				watched: true,
-				watchList: true,
-			},
 		})
-		const watched = user.watched.map(media => ({
-			id: media.id,
-			imdbId: media.imdbId,
-			type: media.type,
-		}))
-		const watchList = user.watchList.map(media => ({
-			id: media.id,
-			imdbId: media.imdbId,
-			type: media.type,
-		}))
 
 		return {
 			id: user.id,
 			username: user.username,
 			name: user.name,
-			watched,
-			watchList,
 		}
 	} catch (error) {
 		// @ts-ignore

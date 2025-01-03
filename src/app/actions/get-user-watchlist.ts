@@ -1,5 +1,6 @@
 'use server'
 
+import { prisma } from '@/lib/prisma'
 import { getUserAction } from './get-user'
 
 export async function getUserWatchListAction() {
@@ -9,5 +10,11 @@ export async function getUserWatchListAction() {
 		throw new Error('User not found')
 	}
 
-	return user.watchList
+	const watchlist = await prisma.watchlist.findMany({
+		where: {
+			userId: user.id,
+		},
+	})
+
+	return watchlist
 }
