@@ -39,9 +39,9 @@ model Watchlist {
   id String @id @default(cuid())
 
   user    User   @relation(fields: [userId], references: [id])
-  media   Media  @relation(fields: [mediaId], references: [id])
+  media   Media  @relation(fields: [mediaImdbId], references: [imdbId])
   userId  String @map("user_id")
-  mediaId String @map("media_id")
+  mediaImdbId String @map("media_imdb_id")
 
   @@map("watchlists")
 }
@@ -50,9 +50,9 @@ model WatchedList {
   id String @id @default(cuid())
 
   user    User   @relation(fields: [userId], references: [id])
-  media   Media  @relation(fields: [mediaId], references: [id])
+  media   Media  @relation(fields: [mediaImdbId], references: [imdbId])
   userId  String @map("user_id")
-  mediaId String @map("media_id")
+  mediaImdbId String @map("media_imdb_id")
 
   @@map("watched_lists")
 }
@@ -63,10 +63,10 @@ model Sponsorship {
   price Float
   who   String
 
-  media   Media  @relation(fields: [mediaId], references: [id])
+  media   Media  @relation(fields: [mediaImdbId], references: [imdbId])
   user    User   @relation(fields: [userId], references: [id])
   userId  String @map("user_id")
-  mediaId String @map("media_id")
+  mediaImdbId String @map("media_imdb_id")
 
   @@map("sponsorships")
 }
