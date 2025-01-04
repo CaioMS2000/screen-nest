@@ -57,9 +57,10 @@ export function Component({
 					placeholder="Pesquisar..."
 					size="lg"
 					startContent={<Search01Icon className="size-5 text-white" />}
-					isClearable
+					isClearable={true}
 					value={searchText}
 					onChange={e => setSearchText(e.target.value)}
+					onClear={() => setSearchText('')}
 				/>
 				<div className="div"></div>
 				{isDeboundedValueEmpty && children && (
