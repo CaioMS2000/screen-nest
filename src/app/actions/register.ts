@@ -4,7 +4,6 @@ import { register } from '@/services/register'
 
 export async function registerAction(data: RegisterFormData) {
 	try {
-		console.log('registrar com:', data)
 		await register(data.name, data.username, data.password)
 
 		return {

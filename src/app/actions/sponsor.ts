@@ -29,8 +29,6 @@ export async function sponsorAction(data: SponsorFormData) {
 			},
 		})
 
-		console.log(newSponsor)
-
 		return {
 			success: true,
 		}
