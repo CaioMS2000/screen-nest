@@ -20,7 +20,7 @@ import {
 } from '@nextui-org/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useForm, FieldErrors } from 'react-hook-form'
+import { FieldErrors, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 export default function RegisterModal() {
@@ -44,22 +44,18 @@ export default function RegisterModal() {
 	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
 
 	async function onSubmit(data: RegisterFormData) {
-		try {
-			await registerAction(data)
+		const result = await registerAction(data)
 
-			toast.success('Usuário registrado com sucesso!')
-			router.push(`/?${USERNAME_TO_LOGIN_URL_STATE}=${data.username}`)
-			// router.refresh()
-			await new Promise(resolve => setTimeout(resolve, 1000 * 1))
-			window.location.reload()
-			onClose()
-		} catch (error) {
-			if (error instanceof Error) {
-				return toast.error(error.message)
-			}
-			console.log(error)
-			toast.error('Erro ao registrar usuário')
+		if (!result.success) {
+			return toast.error(result.message)
 		}
+
+		toast.success('Usuário registrado com sucesso!')
+		router.push(`/?${USERNAME_TO_LOGIN_URL_STATE}=${data.username}`)
+		// router.refresh()
+		await new Promise(resolve => setTimeout(resolve, 1000 * 1))
+		window.location.reload()
+		onClose()
 	}
 
 	useEffect(() => {
