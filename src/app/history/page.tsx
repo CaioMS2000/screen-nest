@@ -7,10 +7,11 @@ import dayjs from 'dayjs'
 import ptBR from 'dayjs/locale/pt-br'
 import History from './components/history'
 import { isMovie, isSerie } from '@/utils'
-
 dayjs.locale(ptBR)
 
 type PageParams = Promise<any>
+
+export const dynamic = 'force-dynamic'
 
 export default async function HistoryPage({ params }: { params: PageParams }) {
 	const sponsorships = await getUserSponsorshipsAction()
