@@ -5,6 +5,8 @@ import { getUserWatchedAction } from '../actions/get-user-watched'
 import { getUserWatchListAction } from '../actions/get-user-watchlist'
 import MediaList, { MediaBoxProps } from './components/media-list'
 import { getMediaAction } from '../actions/get-media'
+import { getUserAction } from '../actions/get-user'
+import { redirect } from 'next/navigation'
 
 type PageParams = Promise<any>
 
@@ -13,6 +15,12 @@ export const dynamic = 'force-dynamic'
 export default async function MediaListPage({
 	params,
 }: { params: PageParams }) {
+	const user = await getUserAction()
+
+	if (!user) {
+		redirect('/')
+	}
+
 	const watchedMedias = await getUserWatchedAction()
 	const watchListMedias = await getUserWatchListAction()
 	const watched: MediaBoxProps[] = []

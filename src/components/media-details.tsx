@@ -83,8 +83,6 @@ export function MediaDetails({
 			date: dayjs().format('YYYY-MM-DD'),
 			mediaId: id,
 			imdbId: imdb_id,
-			name: 'caio',
-			price: '1',
 			mediaType: mediaType,
 		},
 	})
