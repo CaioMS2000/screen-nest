@@ -9,7 +9,7 @@ export const loginFormSchema = z.object({
 			/^(?![0-9])[^ ]+$/,
 			'O nome de usuário não pode conter espaço em branco e não pode começar com número.'
 		),
-	password: z.string().min(8, 'A senha deve ter pelo menos 8 caracteres.'),
+	password: z.string().min(4, 'A senha deve ter pelo menos 4 caracteres.'),
 })
 export const registerFormSchema = z.object({
 	name: z.string().min(3, 'A senha deve ter pelo menos 3 caracteres.'),
@@ -20,7 +20,7 @@ export const registerFormSchema = z.object({
 			/^(?![0-9])[^ ]+$/,
 			'O nome de usuário não pode conter espaço em branco e não pode começar com número.'
 		),
-	password: z.string().min(8, 'A senha deve ter pelo menos 8 caracteres.'),
+	password: z.string().min(4, 'A senha deve ter pelo menos 4 caracteres.'),
 })
 
 export const sponsorSchema = z.object({

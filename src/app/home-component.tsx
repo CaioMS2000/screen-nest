@@ -27,15 +27,17 @@ export function Component({
 	const isDeboundedValueEmpty = deboundedValue.length === 0
 
 	useEffect(() => {
-		const newParams = new URLSearchParams()
+		const newParams = new URLSearchParams(params)
 		if (!isDeboundedValueEmpty) {
 			if (!urlQueryState || urlQueryState !== deboundedValue) {
 				newParams.set('query', deboundedValue)
 				router.push(`${pathname}?${newParams.toString()}`)
 			}
 		} else {
-			if (params.size > 0) {
-				router.push(`${pathname}`)
+			newParams.delete('query')
+
+			if (params.toString() !== newParams.toString()) {
+				router.push(`${pathname}?${newParams.toString()}`)
 			}
 		}
 	}, [

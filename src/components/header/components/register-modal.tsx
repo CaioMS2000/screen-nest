@@ -19,8 +19,8 @@ import {
 	useDisclosure,
 } from '@nextui-org/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { useForm, FieldErrors } from 'react-hook-form'
 import { toast } from 'sonner'
 
 export default function RegisterModal() {
@@ -48,8 +48,11 @@ export default function RegisterModal() {
 			await registerAction(data)
 
 			toast.success('Usuário registrado com sucesso!')
-			onClose()
 			router.push(`/?${USERNAME_TO_LOGIN_URL_STATE}=${data.username}`)
+			// router.refresh()
+			await new Promise(resolve => setTimeout(resolve, 1000 * 1))
+			window.location.reload()
+			onClose()
 		} catch (error) {
 			if (error instanceof Error) {
 				return toast.error(error.message)
@@ -58,6 +61,15 @@ export default function RegisterModal() {
 			toast.error('Erro ao registrar usuário')
 		}
 	}
+
+	useEffect(() => {
+		Object.keys(errors).forEach(key => {
+			const message = errors[key as keyof FieldErrors<RegisterFormData>]?.message
+			if (message) {
+				toast.error(message)
+			}
+		})
+	}, [errors])
 
 	return (
 		<>
@@ -74,7 +86,7 @@ export default function RegisterModal() {
 									<Input
 										{...register('name')}
 										size="lg"
-										placeholder="usuário"
+										placeholder="seu nome"
 										startContent={
 											<ArrangeByLettersAZIcon className="pointer-events-none size-8 flex-shrink-0 text-default-400" />
 										}
@@ -94,7 +106,7 @@ export default function RegisterModal() {
 									<Input
 										{...register('password')}
 										size="lg"
-										placeholder="usuário"
+										placeholder="senha"
 										startContent={
 											<SquareLock01Icon className="pointer-events-none size-8 flex-shrink-0 text-default-400" />
 										}

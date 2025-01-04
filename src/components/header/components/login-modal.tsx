@@ -18,14 +18,15 @@ import {
 	useDisclosure,
 } from '@nextui-org/react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { FieldErrors, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 export default function LoginModal() {
 	const [isVisible, setIsVisible] = useState(false)
 	const toggleVisibility = () => setIsVisible(!isVisible)
 	const params = useSearchParams()
+	const usernameParam = params.get(USERNAME_TO_LOGIN_URL_STATE)
 	const router = useRouter()
 	const {
 		handleSubmit,
@@ -39,7 +40,9 @@ export default function LoginModal() {
 			password: '',
 		},
 	})
-	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure()
+	const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure({
+		defaultOpen: !!usernameParam,
+	})
 
 	async function onSubmit(data: LoginFormData) {
 		const response = await loginAction(data)
@@ -53,6 +56,15 @@ export default function LoginModal() {
 			toast.error('Usuário ou senha inválidos')
 		}
 	}
+
+	useEffect(() => {
+		Object.keys(errors).forEach(key => {
+			const message = errors[key as keyof FieldErrors<LoginFormData>]?.message
+			if (message) {
+				toast.error(message)
+			}
+		})
+	}, [errors])
 
 	return (
 		<>
