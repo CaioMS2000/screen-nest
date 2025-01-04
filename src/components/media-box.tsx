@@ -35,7 +35,7 @@ export function MediaBox({
 						alt={title}
 					/>
 				</div>
-				<div className="flex flex-grow flex-col p-4 text-white">
+				<div className="flex flex-grow flex-col justify-end p-4 text-white">
 					<div className="flex items-start justify-between gap-2">
 						<h3 className="font-semibold text-lg leading-tight">{title}</h3>
 						<div className="flex items-center gap-1 text-yellow-500">

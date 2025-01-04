@@ -22,9 +22,11 @@ export default function RootLayout({
 		>
 			<body className={'dark min-h-screen bg-app-black-500 antialiased'}>
 				<Providers>
-					<Header />
-					{children}
-					<Footer />
+					<div className="flex min-h-screen flex-col">
+						<Header />
+						<div className="flex-grow">{children}</div>
+						<Footer />
+					</div>
 				</Providers>
 			</body>
 		</html>

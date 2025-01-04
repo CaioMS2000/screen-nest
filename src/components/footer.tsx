@@ -1,8 +1,14 @@
+import { cn } from '@/lib/utils'
 import Link from 'next/link'
 
-export async function Footer() {
+interface FooterProps extends React.HTMLProps<HTMLDivElement> {}
+
+export async function Footer({ className, ...props }: FooterProps) {
 	return (
-		<footer className="mt-10 bg-black py-4 text-white">
+		<footer
+			className={cn('mt-10 bg-black py-4 text-white', className)}
+			{...props}
+		>
 			<div className="container mx-auto text-center">
 				<p>
 					&copy; {new Date().getFullYear()}{' '}

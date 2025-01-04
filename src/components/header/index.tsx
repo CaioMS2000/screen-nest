@@ -1,11 +1,20 @@
 import Link from 'next/link'
 import { UserSection } from './components/user-section'
 import { Film01Icon } from '../houstonicons/film'
+import { cn } from '@/lib/utils'
 
-export async function Header() {
+interface HeaderProps extends React.HTMLProps<HTMLDivElement> {}
+
+export async function Header({ className, ...props }: HeaderProps) {
 	return (
 		<>
-			<header className="flex items-center justify-between bg-app-black-100 px-4 py-2 text-white">
+			<header
+				className={cn(
+					'flex items-center justify-between bg-app-black-100 px-4 py-2 text-white',
+					className
+				)}
+				{...props}
+			>
 				<div className="flex items-center gap-5">
 					<Link href={'/'} className="flex cursor-pointer items-center gap-2">
 						<Film01Icon className="size-10 text-app-red" />
