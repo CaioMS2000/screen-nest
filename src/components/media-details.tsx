@@ -8,7 +8,10 @@ import { adddMediaToWatchedtAction } from '@/app/actions/add-media-to-watched'
 import { sponsorAction } from '@/app/actions/sponsor'
 import { AlertCircleIcon } from '@/components/houstonicons/alert'
 import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
-import { CheckmarkSquare02Icon } from '@/components/houstonicons/check'
+import {
+	BookmarkCheck02Icon,
+	CheckmarkSquare02Icon,
+} from '@/components/houstonicons/check'
 import { Clock01Icon } from '@/components/houstonicons/clock'
 import { PlusSignSquareIcon } from '@/components/houstonicons/plus'
 import { StarIcon } from '@/components/houstonicons/star'
@@ -131,7 +134,7 @@ export function MediaDetails({
 			{/* Hero Section */}
 			<div className="relative h-[70vh] w-full">
 				<button
-					onClick={() => router.push('/')}
+					onClick={() => router.back()}
 					className="absolute top-4 left-4 z-10 rounded-full bg-black/50 p-2 transition-colors hover:bg-black/70"
 				>
 					<ArrowLeft03Icon className="size-10 text-white" />
@@ -171,7 +174,10 @@ export function MediaDetails({
 							{runtime && (
 								<>
 									<span>•</span>
-									<span>{minutesToHours(runtime)}</span>
+									<span className="inline-flex items-center gap-1">
+										<Clock01Icon className="size-5 text-white" />
+										{minutesToHours(runtime)}
+									</span>
 								</>
 							)}
 							<div className="flex items-center gap-1 text-yellow-500">
@@ -201,8 +207,8 @@ export function MediaDetails({
 									}
 									onClick={onOpen}
 								>
-									<Clock01Icon className="size-5 text-white" />
-									<span>Adicionar à lista</span>
+									<BookmarkCheck02Icon className="size-5 text-white" />
+									<span>Reservar</span>
 								</button>
 								<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
 									<ModalContent>
@@ -256,7 +262,7 @@ export function MediaDetails({
 						{user && !isInWatchedlist && (
 							<button
 								className={
-									'mb-8 flex items-center gap-2 rounded-lg bg-pink-500 px-6 py-3 transition-colors hover:bg-pink-600'
+									'mb-8 flex items-center gap-2 rounded-lg bg-yellow-500 px-6 py-3 transition-colors hover:bg-yellow-600'
 								}
 								onClick={handleAdddMediaToWatchedAction}
 							>

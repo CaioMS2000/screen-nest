@@ -13,6 +13,7 @@ import {
 	Button,
 } from '@nextui-org/react'
 import { Key } from 'react'
+import { ArrowDown01Icon } from '@/components/houstonicons/arrow-down'
 
 export function LoggedUser() {
 	const { username, name } = useUser()
@@ -39,6 +40,7 @@ export function LoggedUser() {
 						<span className="flex items-center gap-2 rounded-lg border-1 border-danger bg-app-black-500 px-3 py-2 font-semibold">
 							<UserSquareIcon className="size-10 text-danger" />
 							{name}
+							<ArrowDown01Icon className="size-5 text-danger" />
 						</span>
 					</button>
 				</DropdownTrigger>

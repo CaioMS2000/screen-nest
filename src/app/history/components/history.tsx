@@ -3,12 +3,15 @@
 import { Sponsorship } from '@/app/@types'
 import { ArrowLeft03Icon } from '@/components/houstonicons/arrow-left'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 interface HistoryProps {
 	sponsorships: Sponsorship[]
 }
 
 export default function History({ sponsorships }: HistoryProps) {
+	const router = useRouter()
+
 	const totalAmount = sponsorships.reduce(
 		(total, sponsorship) => total + sponsorship.amount,
 		0
@@ -18,12 +21,12 @@ export default function History({ sponsorships }: HistoryProps) {
 		<div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
 			<div className="mb-8 flex items-center justify-between">
 				<div className="flex items-center gap-4">
-					<Link
-						href={'/'}
-						className="rounded-full p-2 transition-colors hover:bg-gray-800"
+					<div
+						className="cursor-pointer rounded-full p-2 transition-colors hover:bg-gray-800"
+						onClick={() => router.back()}
 					>
 						<ArrowLeft03Icon className="h-6 w-6 text-white" />
-					</Link>
+					</div>
 					<h1 className="font-bold text-2xl">Histórico de Doações</h1>
 				</div>
 				<div className="text-right">
