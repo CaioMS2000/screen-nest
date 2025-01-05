@@ -64,7 +64,7 @@ export function Component({
 				/>
 				<div className="div"></div>
 				{isDeboundedValueEmpty && children && (
-					<div className="mt-10 px-2">{children}</div>
+					<div className="mt-10 px-4">{children}</div>
 				)}
 				{!isDeboundedValueEmpty && (
 					<div className="mt-10 grid grid-cols-1 gap-6 p-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">

@@ -15,7 +15,7 @@ import {
 import { Key } from 'react'
 
 export function LoggedUser() {
-	const { username } = useUser()
+	const { username, name } = useUser()
 	const router = useRouter()
 
 	async function handleLogout() {
@@ -36,9 +36,9 @@ export function LoggedUser() {
 			<Dropdown>
 				<DropdownTrigger>
 					<button className="">
-						<span className="text- flex items-center gap-2 rounded-lg bg-zinc-700 px-3 py-2 font-semibold">
-							<UserSquareIcon className="size-10" />
-							{username}
+						<span className="flex items-center gap-2 rounded-lg border-1 border-danger bg-app-black-500 px-3 py-2 font-semibold">
+							<UserSquareIcon className="size-10 text-danger" />
+							{name}
 						</span>
 					</button>
 				</DropdownTrigger>
@@ -52,12 +52,12 @@ export function LoggedUser() {
 			<Button
 				variant="bordered"
 				color="danger"
-				className="mx-4 font-semibold"
+				className="mx-4 bg-app-black-500 font-semibold"
 				onPress={() => router.push('/media-list')}
 			>
 				Lista
 			</Button>
-			<Button isIconOnly onPress={handleLogout}>
+			<Button isIconOnly onPress={handleLogout} className="bg-app-black-500">
 				<TransitionLeftIcon className="size-5 text-app-red" color="" />
 			</Button>
 		</div>
