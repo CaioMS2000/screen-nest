@@ -10,7 +10,7 @@ export async function Header({ className, ...props }: HeaderProps) {
 		<>
 			<header
 				className={cn(
-					'flex items-center justify-between bg-app-black-100 px-4 py-2 text-white',
+					'flex items-center justify-between bg-app-black-100 px-4 py-4 text-white md:py-2',
 					className
 				)}
 				{...props}

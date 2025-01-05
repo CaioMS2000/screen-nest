@@ -37,9 +37,11 @@ export function MediaBox({
 				</div>
 				<div className="flex flex-grow flex-col justify-end p-4 text-white">
 					<div className="flex items-start justify-between gap-2">
-						<h3 className="font-semibold text-lg leading-tight">{title}</h3>
+						<h3 className="font-semibold text-sm md:text-lg leading-tight">
+							{title}
+						</h3>
 						<div className="flex items-center gap-1 text-yellow-500">
-							<StarIcon className="size-5 text-yellow-400" />
+							<StarIcon className="size-3 md:size-5 text-yellow-400" />
 							<span className="text-sm">{vote_average.toFixed(1)}</span>
 						</div>
 					</div>

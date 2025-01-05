@@ -53,7 +53,7 @@ export function Component({
 		<>
 			<main>
 				<Input
-					className="mx-auto mt-7 w-[500px] placeholder:font-bold placeholder:text-white"
+					className="mx-auto mt-7 max-w-[70%] placeholder:font-bold placeholder:text-white"
 					placeholder="Pesquisar..."
 					size="lg"
 					startContent={<Search01Icon className="size-5 text-white" />}
@@ -67,7 +67,7 @@ export function Component({
 					<div className="mt-10 px-4">{children}</div>
 				)}
 				{!isDeboundedValueEmpty && (
-					<div className="mt-10 grid grid-cols-1 gap-6 p-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+					<div className="mt-10 grid grid-cols-2 gap-6 p-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
 						{
 							// biome-ignore lint/complexity/useOptionalChain:
 							moviesResponse &&
