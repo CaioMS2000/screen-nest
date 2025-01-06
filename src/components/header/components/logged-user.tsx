@@ -11,6 +11,7 @@ import {
 	DropdownMenu,
 	DropdownItem,
 	Button,
+	Tooltip,
 } from '@nextui-org/react'
 import { Key } from 'react'
 import { ArrowDown01Icon } from '@/components/houstonicons/arrow-down'
@@ -61,9 +62,11 @@ export function LoggedUser() {
 				>
 					Lista
 				</Button>
-				<Button isIconOnly onPress={handleLogout} className="bg-app-black-500">
-					<TransitionLeftIcon className="size-5 text-app-red" color="" />
-				</Button>
+				<Tooltip content="Sair" className="p-3 text-danger text-lg">
+					<Button isIconOnly onPress={handleLogout} className="bg-app-black-500">
+						<TransitionLeftIcon className="size-5 text-app-red" color="" />
+					</Button>
+				</Tooltip>
 			</div>
 
 			<div className="sm:hidden">
